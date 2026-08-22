@@ -1,0 +1,2469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXORA — Smart Shopping</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,Arial,sans-serif;
+}
+
+:root{
+    --primary:#6c4cff;
+    --secondary:#00c6ff;
+    --bg:#f6f7fb;
+    --card:#ffffff;
+    --text:#17171c;
+    --muted:#777;
+    --border:#e8e8ee;
+    --danger:#ff4757;
+    --success:#20bf6b;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,input,select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+    border:0;
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* ================= LOGIN ================= */
+
+#authPage{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:
+        radial-gradient(circle at top left,#7c5cff55,transparent 35%),
+        radial-gradient(circle at bottom right,#00c6ff44,transparent 35%),
+        #11121a;
+}
+
+.auth-box{
+    width:100%;
+    max-width:430px;
+    background:#ffffff;
+    border-radius:28px;
+    padding:35px;
+    box-shadow:0 30px 80px #0007;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:900;
+    background:linear-gradient(90deg,#6c4cff,#00aaff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.auth-logo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.auth-box h1{
+    text-align:center;
+    margin-bottom:8px;
+}
+
+.auth-sub{
+    text-align:center;
+    color:#777;
+    margin-bottom:25px;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    outline:none;
+}
+
+.form-group input:focus{
+    border-color:var(--primary);
+}
+
+.primary-btn{
+    width:100%;
+    padding:15px;
+    color:white;
+    border-radius:13px;
+    background:linear-gradient(135deg,var(--primary),#8e6cff);
+    font-weight:800;
+    transition:.2s;
+}
+
+.primary-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 25px #6c4cff44;
+}
+
+.switch-auth{
+    text-align:center;
+    margin-top:18px;
+    color:#777;
+}
+
+.switch-auth span{
+    color:var(--primary);
+    font-weight:800;
+    cursor:pointer;
+}
+
+.demo-login{
+    margin-top:15px;
+    padding:12px;
+    background:#f1efff;
+    border-radius:12px;
+    text-align:center;
+    font-size:13px;
+}
+
+/* ================= APP ================= */
+
+#app{
+    display:none;
+}
+
+.navbar{
+    height:72px;
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    gap:25px;
+    padding:0 5%;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.nav-links{
+    display:flex;
+    gap:22px;
+    margin-left:auto;
+}
+
+.nav-links button{
+    background:none;
+    color:var(--text);
+    font-weight:600;
+}
+
+.nav-actions{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.icon-btn{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    background:var(--bg);
+    position:relative;
+}
+
+.badge{
+    position:absolute;
+    right:-4px;
+    top:-4px;
+    background:#ff4757;
+    color:white;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    font-size:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.profile-btn{
+    background:linear-gradient(135deg,#6c4cff,#00bfff);
+    color:white;
+    padding:11px 15px;
+    border-radius:12px;
+    font-weight:700;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    margin:25px 5%;
+    border-radius:30px;
+    padding:60px;
+    min-height:350px;
+    color:white;
+    overflow:hidden;
+    position:relative;
+    background:
+        radial-gradient(circle at 80% 20%,#00d9ff88,transparent 25%),
+        linear-gradient(120deg,#16142e,#4930a8 60%,#006f9d);
+}
+
+.hero h1{
+    font-size:clamp(38px,6vw,70px);
+    max-width:700px;
+    line-height:1;
+}
+
+.hero p{
+    font-size:18px;
+    margin:20px 0;
+    max-width:550px;
+    color:#eee;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:12px;
+}
+
+.hero-btn{
+    padding:14px 23px;
+    border-radius:12px;
+    font-weight:800;
+}
+
+.hero-btn.primary{
+    background:white;
+    color:#4529a8;
+}
+
+.hero-btn.secondary{
+    background:#ffffff22;
+    color:white;
+    border:1px solid #ffffff55;
+}
+
+/* ================= MAIN ================= */
+
+.container{
+    padding:10px 5% 60px;
+}
+
+.section-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:30px 0 18px;
+}
+
+.section-title h2{
+    font-size:25px;
+}
+
+.category-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+    gap:15px;
+}
+
+.category{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:22px 10px;
+    text-align:center;
+    transition:.25s;
+}
+
+.category:hover{
+    transform:translateY(-5px);
+    border-color:var(--primary);
+}
+
+.category-icon{
+    font-size:35px;
+    margin-bottom:8px;
+}
+
+/* ================= SEARCH ================= */
+
+.search-area{
+    display:flex;
+    gap:12px;
+    margin:25px 0;
+}
+
+.search-area input{
+    flex:1;
+    padding:15px 18px;
+    border-radius:14px;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    outline:none;
+}
+
+.search-area select{
+    padding:15px;
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:var(--card);
+    color:var(--text);
+}
+
+/* ================= PRODUCTS ================= */
+
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:20px;
+}
+
+.product-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    overflow:hidden;
+    transition:.25s;
+    position:relative;
+}
+
+.product-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 15px 40px #00000010;
+}
+
+.product-image{
+    width:100%;
+    height:210px;
+    object-fit:cover;
+    background:#eee;
+}
+
+.product-info{
+    padding:15px;
+}
+
+.product-brand{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.product-name{
+    font-weight:800;
+    margin:5px 0;
+}
+
+.rating{
+    color:#f5a623;
+    font-size:13px;
+}
+
+.price{
+    font-size:21px;
+    font-weight:900;
+    margin:8px 0;
+}
+
+.old-price{
+    font-size:13px;
+    color:#999;
+    text-decoration:line-through;
+    margin-left:5px;
+}
+
+.discount{
+    color:#16a05d;
+    font-size:12px;
+    font-weight:700;
+}
+
+.product-actions{
+    display:flex;
+    gap:8px;
+}
+
+.cart-btn{
+    flex:1;
+    padding:11px;
+    background:var(--primary);
+    color:white;
+    border-radius:10px;
+    font-weight:700;
+}
+
+.wish-btn{
+    width:42px;
+    border-radius:10px;
+    background:#f1efff;
+    font-size:19px;
+}
+
+.wish-btn.active{
+    color:#ff4757;
+}
+
+/* ================= CART DRAWER ================= */
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:#0007;
+    z-index:500;
+    display:none;
+}
+
+.overlay.show{
+    display:block;
+}
+
+.drawer{
+    position:fixed;
+    right:0;
+    top:0;
+    width:min(450px,100%);
+    height:100%;
+    background:var(--card);
+    z-index:600;
+    transform:translateX(100%);
+    transition:.3s;
+    display:flex;
+    flex-direction:column;
+}
+
+.drawer.show{
+    transform:translateX(0);
+}
+
+.drawer-header{
+    padding:22px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+}
+
+.drawer-items{
+    flex:1;
+    overflow:auto;
+    padding:20px;
+}
+
+.cart-item{
+    display:flex;
+    gap:12px;
+    margin-bottom:18px;
+    padding-bottom:18px;
+    border-bottom:1px solid var(--border);
+}
+
+.cart-item img{
+    width:75px;
+    height:75px;
+    border-radius:12px;
+    object-fit:cover;
+}
+
+.cart-details{
+    flex:1;
+}
+
+.qty{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    margin-top:7px;
+}
+
+.qty button{
+    width:25px;
+    height:25px;
+    border-radius:7px;
+    background:var(--bg);
+}
+
+.drawer-footer{
+    padding:20px;
+    border-top:1px solid var(--border);
+}
+
+.total-row{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:8px;
+}
+
+.grand-total{
+    font-size:22px;
+    font-weight:900;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:#0008;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:700;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    background:var(--card);
+    width:min(650px,100%);
+    max-height:90vh;
+    overflow:auto;
+    border-radius:25px;
+    padding:25px;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:20px;
+}
+
+.close{
+    width:35px;
+    height:35px;
+    border-radius:10px;
+    background:var(--bg);
+}
+
+/* ================= CHECKOUT ================= */
+
+.steps{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:25px;
+}
+
+.step{
+    flex:1;
+    text-align:center;
+    padding:10px;
+    color:#aaa;
+    border-bottom:3px solid #ddd;
+}
+
+.step.active{
+    color:var(--primary);
+    border-color:var(--primary);
+    font-weight:800;
+}
+
+.checkout-section{
+    margin-bottom:25px;
+}
+
+.address-card,
+.payment-card{
+    border:2px solid var(--border);
+    border-radius:15px;
+    padding:15px;
+    margin-bottom:10px;
+    cursor:pointer;
+}
+
+.address-card.selected,
+.payment-card.selected{
+    border-color:var(--primary);
+    background:#6c4cff0b;
+}
+
+.payment-card{
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.coupon{
+    display:flex;
+    gap:8px;
+}
+
+.coupon input{
+    flex:1;
+    padding:13px;
+    border:1px solid var(--border);
+    border-radius:10px;
+}
+
+/* ================= PROFILE ================= */
+
+.profile-grid{
+    display:grid;
+    grid-template-columns:250px 1fr;
+    gap:20px;
+}
+
+.profile-menu,
+.profile-content{
+    background:var(--card);
+    border-radius:20px;
+    padding:20px;
+    border:1px solid var(--border);
+}
+
+.profile-menu button{
+    width:100%;
+    text-align:left;
+    padding:13px;
+    background:none;
+    border-radius:10px;
+    margin-bottom:5px;
+}
+
+.profile-menu button:hover{
+    background:var(--bg);
+}
+
+.order-card{
+    padding:15px;
+    border:1px solid var(--border);
+    border-radius:15px;
+    margin-bottom:12px;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#18181d;
+    color:white;
+    padding:15px 20px;
+    border-radius:12px;
+    transform:translateY(100px);
+    opacity:0;
+    transition:.3s;
+    z-index:1000;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:#11121a;
+    color:white;
+    padding:40px 5%;
+    margin-top:40px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:30px;
+}
+
+footer h3{
+    margin-bottom:15px;
+}
+
+footer p{
+    color:#aaa;
+    margin:8px 0;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:800px){
+
+    .navbar{
+        padding:0 15px;
+    }
+
+    .nav-links{
+        display:none;
+    }
+
+    .navbar .logo{
+        font-size:23px;
+    }
+
+    .hero{
+        margin:15px;
+        padding:35px 25px;
+    }
+
+    .hero h1{
+        font-size:43px;
+    }
+
+    .container{
+        padding:5px 15px 40px;
+    }
+
+    .search-area{
+        flex-direction:column;
+    }
+
+    .product-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
+    }
+
+    .product-image{
+        height:160px;
+    }
+
+    .profile-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:450px){
+
+    .auth-box{
+        padding:25px;
+    }
+
+    .product-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .product-info{
+        padding:10px;
+    }
+
+    .product-name{
+        font-size:14px;
+    }
+
+    .price{
+        font-size:17px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= AUTH PAGE ================= -->
+
+<section id="authPage">
+
+<div class="auth-box">
+
+<div class="auth-logo">
+<div class="logo">NEXORA</div>
+<p>Smart shopping. Better living.</p>
+</div>
+
+<div id="loginForm">
+
+<h1>Welcome Back 👋</h1>
+<p class="auth-sub">Login to continue shopping</p>
+
+<div class="form-group">
+<label>Email</label>
+<input id="loginEmail" type="email" placeholder="you@example.com">
+</div>
+
+<div class="form-group">
+<label>Password</label>
+<input id="loginPassword" type="password" placeholder="••••••••">
+</div>
+
+<button class="primary-btn" onclick="login()">Login</button>
+
+<div class="demo-login">
+Demo: <b>demo@nexora.com</b> / <b>123456</b>
+</div>
+
+<p class="switch-auth">
+Don't have an account?
+<span onclick="showSignup()">Create Account</span>
+</p>
+
+</div>
+
+<div id="signupForm" class="hidden">
+
+<h1>Create Account 🚀</h1>
+<p class="auth-sub">Join the NEXORA shopping community</p>
+
+<div class="form-group">
+<label>Full Name</label>
+<input id="signupName" placeholder="Your name">
+</div>
+
+<div class="form-group">
+<label>Email</label>
+<input id="signupEmail" type="email" placeholder="you@example.com">
+</div>
+
+<div class="form-group">
+<label>Password</label>
+<input id="signupPassword" type="password" placeholder="Create password">
+</div>
+
+<button class="primary-btn" onclick="signup()">Create Account</button>
+
+<p class="switch-auth">
+Already have an account?
+<span onclick="showLogin()">Login</span>
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= APP ================= -->
+
+<div id="app">
+
+<nav class="navbar">
+
+<div class="logo">NEXORA</div>
+
+<div class="nav-links">
+<button onclick="goHome()">Home</button>
+<button onclick="scrollToProducts()">Shop</button>
+<button onclick="openDeals()">🔥 Deals</button>
+<button onclick="openOrders()">Orders</button>
+</div>
+
+<div class="nav-actions">
+
+<button class="icon-btn" onclick="toggleTheme()" title="Theme">🌙</button>
+
+<button class="icon-btn" onclick="openWishlist()">
+♡
+<span id="wishBadge" class="badge">0</span>
+</button>
+
+<button class="icon-btn" onclick="openCart()">
+🛒
+<span id="cartBadge" class="badge">0</span>
+</button>
+
+<button class="profile-btn" onclick="openProfile()">👤</button>
+
+</div>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<h1>Shop Smarter.<br>Live Better.</h1>
+
+<p>
+Discover trending electronics, fashion, lifestyle products and exclusive deals — all in one place.
+</p>
+
+<div class="hero-buttons">
+<button class="hero-btn primary" onclick="scrollToProducts()">Shop Now →</button>
+<button class="hero-btn secondary" onclick="openDeals()">🔥 Today's Deals</button>
+</div>
+
+</section>
+
+<main class="container">
+
+<!-- CATEGORIES -->
+
+<div class="section-title">
+<h2>Explore Categories</h2>
+</div>
+
+<div class="category-grid">
+
+<div class="category" onclick="filterCategory('Electronics')">
+<div class="category-icon">📱</div>
+<b>Electronics</b>
+</div>
+
+<div class="category" onclick="filterCategory('Fashion')">
+<div class="category-icon">👕</div>
+<b>Fashion</b>
+</div>
+
+<div class="category" onclick="filterCategory('Shoes')">
+<div class="category-icon">👟</div>
+<b>Shoes</b>
+</div>
+
+<div class="category" onclick="filterCategory('Beauty')">
+<div class="category-icon">✨</div>
+<b>Beauty</b>
+</div>
+
+<div class="category" onclick="filterCategory('Home')">
+<div class="category-icon">🏠</div>
+<b>Home</b>
+</div>
+
+<div class="category" onclick="filterCategory('Gaming')">
+<div class="category-icon">🎮</div>
+<b>Gaming</b>
+</div>
+
+<div class="category" onclick="filterCategory('Sports')">
+<div class="category-icon">⚽</div>
+<b>Sports</b>
+</div>
+
+<div class="category" onclick="filterCategory('Accessories')">
+<div class="category-icon">⌚</div>
+<b>Accessories</b>
+</div>
+
+</div>
+
+<!-- PRODUCTS -->
+
+<div class="section-title" id="productsSection">
+<h2>Trending Products</h2>
+</div>
+
+<div class="search-area">
+
+<input
+id="searchInput"
+placeholder="🔍 Search products, brands or categories..."
+oninput="renderProducts()"
+>
+
+<select id="sortSelect" onchange="renderProducts()">
+<option value="default">Sort: Recommended</option>
+<option value="low">Price: Low to High</option>
+<option value="high">Price: High to Low</option>
+<option value="rating">Top Rated</option>
+<option value="discount">Biggest Discount</option>
+</select>
+
+</div>
+
+<div id="products" class="product-grid"></div>
+
+</main>
+
+<footer>
+
+<div class="footer-grid">
+
+<div>
+<h3 class="logo">NEXORA</h3>
+<p>Smart shopping made simple.</p>
+<p>Premium products. Great prices.</p>
+</div>
+
+<div>
+<h3>Shop</h3>
+<p>Electronics</p>
+<p>Fashion</p>
+<p>Beauty</p>
+<p>Gaming</p>
+</div>
+
+<div>
+<h3>Customer Care</h3>
+<p>Help Center</p>
+<p>Shipping</p>
+<p>Returns</p>
+<p>Contact Us</p>
+</div>
+
+<div>
+<h3>Follow Us</h3>
+<p>Instagram</p>
+<p>YouTube</p>
+<p>Facebook</p>
+<p>Twitter</p>
+</div>
+
+</div>
+
+</footer>
+
+</div>
+
+<!-- CART -->
+
+<div id="overlay" class="overlay" onclick="closeCart()"></div>
+
+<div id="cartDrawer" class="drawer">
+
+<div class="drawer-header">
+<h2>🛒 Your Cart</h2>
+<button class="close" onclick="closeCart()">✕</button>
+</div>
+
+<div id="cartItems" class="drawer-items"></div>
+
+<div class="drawer-footer">
+
+<div class="total-row">
+<span>Subtotal</span>
+<b id="subtotal">₹0</b>
+</div>
+
+<div class="total-row">
+<span>Delivery</span>
+<b id="delivery">₹0</b>
+</div>
+
+<div class="total-row">
+<span>Discount</span>
+<b id="cartDiscount">₹0</b>
+</div>
+
+<hr style="margin:12px 0">
+
+<div class="total-row grand-total">
+<span>Total</span>
+<span id="cartTotal">₹0</span>
+</div>
+
+<button class="primary-btn" onclick="startCheckout()">
+Proceed to Checkout →
+</button>
+
+</div>
+
+</div>
+
+<!-- CHECKOUT MODAL -->
+
+<div id="checkoutModal" class="modal">
+
+<div class="modal-box">
+
+<div class="modal-header">
+<h2>Checkout</h2>
+<button class="close" onclick="closeCheckout()">✕</button>
+</div>
+
+<div class="steps">
+<div id="step1" class="step active">Address</div>
+<div id="step2" class="step">Payment</div>
+<div id="step3" class="step">Confirm</div>
+</div>
+
+<div id="checkoutContent"></div>
+
+</div>
+
+</div>
+
+<!-- PROFILE MODAL -->
+
+<div id="profileModal" class="modal">
+
+<div class="modal-box">
+
+<div class="modal-header">
+<h2>My Account</h2>
+<button class="close" onclick="closeProfile()">✕</button>
+</div>
+
+<div class="profile-grid">
+
+<div class="profile-menu">
+
+<button onclick="showProfileTab('account')">👤 Account</button>
+<button onclick="showProfileTab('orders')">📦 My Orders</button>
+<button onclick="showProfileTab('wishlist')">♡ Wishlist</button>
+<button onclick="showProfileTab('rewards')">🎁 Rewards</button>
+<button onclick="logout()">🚪 Logout</button>
+
+</div>
+
+<div id="profileContent" class="profile-content"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- TOAST -->
+
+<div id="toast" class="toast"></div>
+
+<script>
+
+/* ================= DATA ================= */
+
+const products = [
+
+{
+id:1,
+name:"iPhone 15",
+brand:"Apple",
+category:"Electronics",
+price:59999,
+old:69999,
+rating:4.8,
+discount:14,
+image:"https://images.unsplash.com/photo-1592286927505-2fd0c7e0c6e6?auto=format&fit=crop&w=700&q=80"
+},
+
+{
+id:2,
+name:"Galaxy S24",
+brand:"Samsung",
+category:"Electronics",
+price:64999,
+old:74999,
+rating:4.7,
+discount:13,
+image:"https://images.unsplash.com/photo-1610945415295-d9bbf7d7f5b5?auto=format&fit=crop&w=700&q=80"
+},
+
+{
+id:3,
+name:"AirPods Pro",
+brand:"Apple",
+category:"Electronics",
+price:19999,
+old:24999,
+rating:4.9,
+discount:20,
+image:"https://images.unsplash.com/photo-1588423771073-b8903fbb85c5?auto=format&fit=crop&w=700&q=80"
+},
+
+{
+id:4,
+name:"Sony Headphones",
+brand:"Sony",
+category:"Electronics",
+price:7999,
+old:11999,
+rating:4.6,
+discount:33,
+image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=80"
+},
+
+{
+id:5,
+name:"Oversized Hoodie",
+brand:"UrbanX",
+category:"Fashion",
+price:1299,
+old:1999,
+rating:4.5,
+discount:35,
+image:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=700&q=80"
+},
+
+{
+id:6,
+name:"Classic Sneakers",
+brand:"Nike",
+category:"Shoes",
+price:4999,
+old:6999,
+rating:4.7,
+discount:29,
+image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80"
+},
+
+{
+id:7,
+name:"Smart Watch",
+brand:"Noise",
+category:"Accessories",
+price:2499,
+old:3999,
+rating:4.4,
+discount:38,
+image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80"
+},
+
+{
+id:8,
+name:"Gaming Controller",
+brand:"Sony",
+category:"Gaming",
+price:5999,
+old:6999,
+rating:4.8,
+discount:14,
+image:"https://images.unsplash.com/photo-1600080972464-8e5f35f63d08?auto=format&fit=crop&w=700&q=80"
+},
+
+{
+id:9,
+name:"Gaming Keyboard",
+brand:"Razer",
+category:"Gaming",
+price:5499,
+old:7999,
+rating:4.6,
+discount:31,
+image:"https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=700&q=80"
+},
+
+{
+id:10,
+name:"Sports Shoes",
+brand:"Adidas",
+category:"Sports",
+price:3499,
+old:4999,
+rating:4.5,
+discount:30,
+image:"https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=700&q=80"
+},
+
+{
+id:11,
+name:"Coffee Maker",
+brand:"Philips",
+category:"Home",
+price:2999,
+old:3999,
+rating:4.3,
+discount:25,
+image:"https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?auto=format&fit=crop&w=700&q=80"
+},
+
+{
+id:12,
+name:"Perfume",
+brand:"Titan",
+category:"Beauty",
+price:1499,
+old:1999,
+rating:4.4,
+discount:25,
+image:"https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=700&q=80"
+}
+
+];
+
+let cart = JSON.parse(localStorage.getItem("nexora_cart")) || [];
+let wishlist = JSON.parse(localStorage.getItem("nexora_wishlist")) || [];
+let orders = JSON.parse(localStorage.getItem("nexora_orders")) || [];
+let currentUser = JSON.parse(localStorage.getItem("nexora_user")) || null;
+
+let selectedCategory = "All";
+let couponDiscount = 0;
+
+/* ================= START ================= */
+
+if(currentUser){
+    showApp();
+}
+
+/* ================= AUTH ================= */
+
+function showSignup(){
+
+    document.getElementById("loginForm").classList.add("hidden");
+    document.getElementById("signupForm").classList.remove("hidden");
+
+}
+
+function showLogin(){
+
+    document.getElementById("signupForm").classList.add("hidden");
+    document.getElementById("loginForm").classList.remove("hidden");
+
+}
+
+function login(){
+
+    const email=document.getElementById("loginEmail").value.trim();
+    const password=document.getElementById("loginPassword").value;
+
+    if(email==="demo@nexora.com" && password==="123456"){
+
+        currentUser={
+            name:"Demo User",
+            email:email
+        };
+
+        localStorage.setItem("nexora_user",JSON.stringify(currentUser));
+
+        showApp();
+        toast("Welcome back! 👋");
+
+    }else{
+
+        toast("Use demo@nexora.com / 123456");
+
+    }
+
+}
+
+function signup(){
+
+    const name=document.getElementById("signupName").value.trim();
+    const email=document.getElementById("signupEmail").value.trim();
+    const password=document.getElementById("signupPassword").value;
+
+    if(!name || !email || password.length<6){
+
+        toast("Please enter valid details");
+        return;
+
+    }
+
+    currentUser={name,email};
+
+    localStorage.setItem("nexora_user",JSON.stringify(currentUser));
+
+    showApp();
+
+    toast("Account created successfully 🎉");
+
+}
+
+function logout(){
+
+    localStorage.removeItem("nexora_user");
+    currentUser=null;
+
+    location.reload();
+
+}
+
+function showApp(){
+
+    document.getElementById("authPage").style.display="none";
+    document.getElementById("app").style.display="block";
+
+    renderProducts();
+    updateBadges();
+
+}
+
+/* ================= PRODUCTS ================= */
+
+function renderProducts(){
+
+    const search=document.getElementById("searchInput")?.value.toLowerCase() || "";
+
+    const sort=document.getElementById("sortSelect")?.value || "default";
+
+    let list=products.filter(p=>{
+
+        const matchesSearch=
+            p.name.toLowerCase().includes(search) ||
+            p.brand.toLowerCase().includes(search) ||
+            p.category.toLowerCase().includes(search);
+
+        const matchesCategory=
+            selectedCategory==="All" ||
+            p.category===selectedCategory;
+
+        return matchesSearch && matchesCategory;
+
+    });
+
+    if(sort==="low") list.sort((a,b)=>a.price-b.price);
+    if(sort==="high") list.sort((a,b)=>b.price-a.price);
+    if(sort==="rating") list.sort((a,b)=>b.rating-a.rating);
+    if(sort==="discount") list.sort((a,b)=>b.discount-a.discount);
+
+    const container=document.getElementById("products");
+
+    if(!list.length){
+
+        container.innerHTML=`
+        <div style="grid-column:1/-1;text-align:center;padding:50px">
+        <h2>🔍 No products found</h2>
+        <p style="color:#888;margin-top:10px">
+        Try another search or category.
+        </p>
+        </div>`;
+
+        return;
+    }
+
+    container.innerHTML=list.map(productCard).join("");
+
+}
+
+function productCard(p){
+
+    const wished=wishlist.includes(p.id);
+
+    return`
+
+    <div class="product-card">
+
+        <img class="product-image"
+        src="${p.image}"
+        alt="${p.name}">
+
+        <div class="product-info">
+
+            <div class="product-brand">${p.brand}</div>
+
+            <div class="product-name">${p.name}</div>
+
+            <div class="rating">
+            ⭐ ${p.rating}
+            </div>
+
+            <div class="price">
+            ₹${p.price.toLocaleString("en-IN")}
+            <span class="old-price">
+            ₹${p.old.toLocaleString("en-IN")}
+            </span>
+            </div>
+
+            <div class="discount">
+            ${p.discount}% OFF
+            </div>
+
+            <div class="product-actions">
+
+                <button class="cart-btn"
+                onclick="addToCart(${p.id})">
+                🛒 Add to Cart
+                </button>
+
+                <button
+                class="wish-btn ${wished?'active':''}"
+                onclick="toggleWishlist(${p.id})">
+                ${wished?'♥':'♡'}
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    `;
+
+}
+
+/* ================= CART ================= */
+
+function addToCart(id){
+
+    const existing=cart.find(x=>x.id===id);
+
+    if(existing){
+        existing.qty++;
+    }else{
+        cart.push({
+            id,
+            qty:1
+        });
+    }
+
+    saveCart();
+
+    toast("Added to cart 🛒");
+
+    updateBadges();
+
+}
+
+function saveCart(){
+
+    localStorage.setItem(
+        "nexora_cart",
+        JSON.stringify(cart)
+    );
+
+}
+
+function openCart(){
+
+    renderCart();
+
+    document.getElementById("overlay").classList.add("show");
+    document.getElementById("cartDrawer").classList.add("show");
+
+}
+
+function closeCart(){
+
+    document.getElementById("overlay").classList.remove("show");
+    document.getElementById("cartDrawer").classList.remove("show");
+
+}
+
+function renderCart(){
+
+    const container=document.getElementById("cartItems");
+
+    if(!cart.length){
+
+        container.innerHTML=`
+        <div style="text-align:center;padding:60px 10px">
+        <div style="font-size:60px">🛒</div>
+        <h3>Your cart is empty</h3>
+        <p style="color:#888;margin:10px">Add something awesome!</p>
+        </div>`;
+
+        document.getElementById("subtotal").innerText="₹0";
+        document.getElementById("delivery").innerText="₹0";
+        document.getElementById("cartDiscount").innerText="₹0";
+        document.getElementById("cartTotal").innerText="₹0";
+
+        return;
+
+    }
+
+    container.innerHTML=cart.map(item=>{
+
+        const p=products.find(x=>x.id===item.id);
+
+        return`
+
+        <div class="cart-item">
+
+            <img src="${p.image}">
+
+            <div class="cart-details">
+
+                <b>${p.name}</b>
+
+                <p style="color:#777">
+                ₹${p.price.toLocaleString("en-IN")}
+                </p>
+
+                <div class="qty">
+
+                    <button onclick="changeQty(${p.id},-1)">−</button>
+
+                    <b>${item.qty}</b>
+
+                    <button onclick="changeQty(${p.id},1)">+</button>
+
+                    <button onclick="removeCart(${p.id})"
+                    style="margin-left:auto;color:#ff4757">
+                    🗑
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }).join("");
+
+    updateTotals();
+
+}
+
+function changeQty(id,change){
+
+    const item=cart.find(x=>x.id===id);
+
+    if(!item) return;
+
+    item.qty+=change;
+
+    if(item.qty<=0){
+
+        cart=cart.filter(x=>x.id!==id);
+
+    }
+
+    saveCart();
+    renderCart();
+    updateBadges();
+
+}
+
+function removeCart(id){
+
+    cart=cart.filter(x=>x.id!==id);
+
+    saveCart();
+    renderCart();
+    updateBadges();
+
+    toast("Removed from cart");
+
+}
+
+function calculateSubtotal(){
+
+    return cart.reduce((sum,item)=>{
+
+        const p=products.find(x=>x.id===item.id);
+
+        return sum+p.price*item.qty;
+
+    },0);
+
+}
+
+function updateTotals(){
+
+    const subtotal=calculateSubtotal();
+
+    const delivery=subtotal>999 || subtotal===0 ? 0 : 79;
+
+    const discount=couponDiscount;
+
+    const total=Math.max(
+        0,
+        subtotal+delivery-discount
+    );
+
+    document.getElementById("subtotal").innerText=
+        "₹"+subtotal.toLocaleString("en-IN");
+
+    document.getElementById("delivery").innerText=
+        delivery===0 ? "FREE" : "₹"+delivery;
+
+    document.getElementById("cartDiscount").innerText=
+        "-₹"+discount.toLocaleString("en-IN");
+
+    document.getElementById("cartTotal").innerText=
+        "₹"+total.toLocaleString("en-IN");
+
+}
+
+/* ================= WISHLIST ================= */
+
+function toggleWishlist(id){
+
+    if(wishlist.includes(id)){
+
+        wishlist=wishlist.filter(x=>x!==id);
+        toast("Removed from wishlist");
+
+    }else{
+
+        wishlist.push(id);
+        toast("Added to wishlist ❤️");
+
+    }
+
+    localStorage.setItem(
+        "nexora_wishlist",
+        JSON.stringify(wishlist)
+    );
+
+    renderProducts();
+    updateBadges();
+
+}
+
+function openWishlist(){
+
+    const list=products.filter(p=>wishlist.includes(p.id));
+
+    if(!list.length){
+
+        toast("Your wishlist is empty ❤️");
+        return;
+
+    }
+
+    document.getElementById("products").innerHTML=
+        list.map(productCard).join("");
+
+    document.getElementById("productsSection")
+        .scrollIntoView({behavior:"smooth"});
+
+    toast("Showing wishlist ❤️");
+
+}
+
+/* ================= CATEGORY ================= */
+
+function filterCategory(category){
+
+    selectedCategory=category;
+
+    document.getElementById("searchInput").value="";
+
+    renderProducts();
+
+    scrollToProducts();
+
+}
+
+function scrollToProducts(){
+
+    document.getElementById("productsSection")
+    .scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+function goHome(){
+
+    selectedCategory="All";
+
+    document.getElementById("searchInput").value="";
+
+    renderProducts();
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+/* ================= CHECKOUT ================= */
+
+function startCheckout(){
+
+    if(!cart.length){
+
+        toast("Your cart is empty");
+        return;
+
+    }
+
+    closeCart();
+
+    couponDiscount=0;
+
+    document.getElementById("checkoutModal")
+        .classList.add("show");
+
+    checkoutStep(1);
+
+}
+
+function checkoutStep(step){
+
+    document.getElementById("step1").classList.toggle(
+        "active",step>=1
+    );
+
+    document.getElementById("step2").classList.toggle(
+        "active",step>=2
+    );
+
+    document.getElementById("step3").classList.toggle(
+        "active",step>=3
+    );
+
+    const content=document.getElementById("checkoutContent");
+
+    if(step===1){
+
+        content.innerHTML=`
+
+        <div class="checkout-section">
+
+        <h3>📍 Delivery Address</h3>
+
+        <div class="address-card selected">
+
+        <b>Home</b>
+
+        <p style="margin-top:6px">
+        ${currentUser?.name || "Demo User"}<br>
+        Chennai, Tamil Nadu - 600001<br>
+        India
+        </p>
+
+        </div>
+
+        <button class="primary-btn"
+        onclick="checkoutStep(2)">
+        Continue to Payment →
+        </button>
+
+        </div>
+
+        `;
+
+    }
+
+    if(step===2){
+
+        content.innerHTML=`
+
+        <div class="checkout-section">
+
+        <h3>💳 Select Payment Method</h3>
+
+        <div class="payment-card selected">
+        <input type="radio" checked>
+        <span>📱 <b>UPI</b><br>
+        Google Pay / PhonePe / Paytm</span>
+        </div>
+
+        <div class="payment-card">
+        <input type="radio">
+        <span>💳 <b>Credit / Debit Card</b><br>
+        Visa / Mastercard / RuPay</span>
+        </div>
+
+        <div class="payment-card">
+        <input type="radio">
+        <span>🏦 <b>Net Banking</b></span>
+        </div>
+
+        <div class="payment-card">
+        <input type="radio">
+        <span>💵 <b>Cash on Delivery</b></span>
+        </div>
+
+        </div>
+
+        <div class="checkout-section">
+
+        <h3>🎟 Coupon</h3>
+
+        <div class="coupon">
+
+        <input id="couponInput"
+        placeholder="Try NEXORA10">
+
+        <button class="cart-btn"
+        onclick="applyCoupon()">
+        Apply
+        </button>
+
+        </div>
+
+        </div>
+
+        <button class="primary-btn"
+        onclick="checkoutStep(3)">
+        Review Order →
+        </button>
+
+        `;
+
+    }
+
+    if(step===3){
+
+        const subtotal=calculateSubtotal();
+
+        const delivery=subtotal>999?0:79;
+
+        const total=subtotal+delivery-couponDiscount;
+
+        content.innerHTML=`
+
+        <div style="text-align:center;margin-bottom:20px">
+
+        <div style="font-size:55px">🛍️</div>
+
+        <h2>Almost There!</h2>
+
+        <p style="color:#777">
+        Review your order before placing it.
+        </p>
+
+        </div>
+
+        ${cart.map(item=>{
+
+            const p=products.find(x=>x.id===item.id);
+
+            return`
+
+            <div class="cart-item">
+
+            <img src="${p.image}">
+
+            <div class="cart-details">
+
+            <b>${p.name}</b>
+
+            <p>${item.qty} × ₹${p.price.toLocaleString("en-IN")}</p>
+
+            </div>
+
+            </div>
+
+            `;
+
+        }).join("")}
+
+        <div class="total-row">
+        <span>Subtotal</span>
+        <b>₹${subtotal.toLocaleString("en-IN")}</b>
+        </div>
+
+        <div class="total-row">
+        <span>Delivery</span>
+        <b>${delivery===0?"FREE":"₹"+delivery}</b>
+        </div>
+
+        <div class="total-row">
+        <span>Discount</span>
+        <b>-₹${couponDiscount}</b>
+        </div>
+
+        <hr style="margin:12px 0">
+
+        <div class="total-row grand-total">
+        <span>Total</span>
+        <span>₹${total.toLocaleString("en-IN")}</span>
+        </div>
+
+        <button class="primary-btn"
+        onclick="placeOrder()">
+        🔒 Place Order • ₹${total.toLocaleString("en-IN")}
+        </button>
+
+        `;
+
+    }
+
+}
+
+function applyCoupon(){
+
+    const code=document.getElementById("couponInput").value
+        .trim()
+        .toUpperCase();
+
+    const subtotal=calculateSubtotal();
+
+    if(code==="NEXORA10"){
+
+        couponDiscount=Math.round(subtotal*0.10);
+
+        toast("10% coupon applied 🎉");
+
+    }else if(code==="SAVE500"){
+
+        couponDiscount=Math.min(500,subtotal);
+
+        toast("₹500 discount applied 🎉");
+
+    }else{
+
+        couponDiscount=0;
+
+        toast("Invalid coupon");
+
+    }
+
+}
+
+function placeOrder(){
+
+    const subtotal=calculateSubtotal();
+
+    const delivery=subtotal>999?0:79;
+
+    const total=subtotal+delivery-couponDiscount;
+
+    const order={
+
+        id:"NX"+Date.now().toString().slice(-8),
+
+        date:new Date().toLocaleDateString("en-IN"),
+
+        items:[...cart],
+
+        total,
+
+        status:"Confirmed"
+
+    };
+
+    orders.unshift(order);
+
+    localStorage.setItem(
+        "nexora_orders",
+        JSON.stringify(orders)
+    );
+
+    cart=[];
+
+    saveCart();
+
+    couponDiscount=0;
+
+    document.getElementById("checkoutContent").innerHTML=`
+
+    <div style="text-align:center;padding:25px">
+
+        <div style="font-size:80px">
+        🎉
+        </div>
+
+        <h1>Order Placed!</h1>
+
+        <p style="margin:12px;color:#777">
+        Thank you for shopping with NEXORA.
+        </p>
+
+        <div style="
+        background:#f1fff7;
+        padding:18px;
+        border-radius:15px;
+        margin:20px 0">
+
+        <b>Order ID</b>
+        <h2>${order.id}</h2>
+
+        <p>Amount Paid: ₹${total.toLocaleString("en-IN")}</p>
+
+        <p style="color:#20bf6b">
+        Expected delivery: 3–5 business days
+        </p>
+
+        </div>
+
+        <button class="primary-btn"
+        onclick="closeCheckout();openOrders()">
+        Track My Order →
+        </button>
+
+    </div>
+
+    `;
+
+    updateBadges();
+
+}
+
+/* ================= ORDERS ================= */
+
+function openOrders(){
+
+    document.getElementById("profileModal")
+        .classList.add("show");
+
+    showProfileTab("orders");
+
+}
+
+function showProfileTab(tab){
+
+    const content=document.getElementById("profileContent");
+
+    if(tab==="account"){
+
+        content.innerHTML=`
+
+        <h2>👤 My Profile</h2>
+
+        <p style="margin-top:15px">
+        <b>Name:</b> ${currentUser?.name}
+        </p>
+
+        <p style="margin-top:8px">
+        <b>Email:</b> ${currentUser?.email}
+        </p>
+
+        <hr style="margin:20px 0">
+
+        <h3>Account Benefits</h3>
+
+        <p style="color:#777;margin-top:8px">
+        ✓ Faster checkout<br>
+        ✓ Order tracking<br>
+        ✓ Wishlist<br>
+        ✓ Rewards<br>
+        ✓ Personalized recommendations
+        </p>
+
+        `;
+
+    }
+
+    if(tab==="orders"){
+
+        if(!orders.length){
+
+            content.innerHTML=`
+
+            <div style="text-align:center;padding:40px">
+
+            <div style="font-size:50px">📦</div>
+
+            <h3>No Orders Yet</h3>
+
+            <p style="color:#777">
+            Your placed orders will appear here.
+            </p>
+
+            </div>
+
+            `;
+
+            return;
+
+        }
+
+        content.innerHTML=`
+
+        <h2>📦 My Orders</h2>
+
+        <div style="margin-top:20px">
+
+        ${orders.map(order=>`
+
+        <div class="order-card">
+
+        <div style="
+        display:flex;
+        justify-content:space-between;
+        gap:10px">
+
+        <div>
+
+        <b>Order ${order.id}</b>
+
+        <p style="color:#777">
+        ${order.date}
+        </p>
+
+        </div>
+
+        <b style="color:#20bf6b">
+        ₹${order.total.toLocaleString("en-IN")}
+        </b>
+
+        </div>
+
+        <div style="
+        margin-top:15px;
+        padding:12px;
+        background:#f1fff7;
+        border-radius:10px">
+
+        🟢 ${order.status}
+
+        </div>
+
+        <button
+        style="
+        margin-top:12px;
+        padding:10px 15px;
+        border-radius:10px;
+        background:#f1efff;
+        color:#5a3ee8;
+        font-weight:700"
+        onclick="trackOrder('${order.id}')">
+
+        Track Order
+
+        </button>
+
+        </div>
+
+        `).join("")}
+
+        </div>
+
+        `;
+
+    }
+
+    if(tab==="wishlist"){
+
+        content.innerHTML=`
+
+        <h2>♡ Wishlist</h2>
+
+        <p style="margin-top:10px;color:#777">
+        ${wishlist.length} saved products
+        </p>
+
+        `;
+
+    }
+
+    if(tab==="rewards"){
+
+        content.innerHTML=`
+
+        <h2>🎁 NEXORA Rewards</h2>
+
+        <div style="
+        margin-top:20px;
+        padding:25px;
+        border-radius:20px;
+        background:linear-gradient(135deg,#6c4cff,#00bfff);
+        color:white">
+
+        <p>Available Points</p>
+
+        <h1>2,450</h1>
+
+        <p>≈ ₹245 shopping value</p>
+
+        </div>
+
+        <h3 style="margin-top:25px">
+        Ways to earn
+        </h3>
+
+        <p style="margin-top:10px">
+        🛒 Purchase products<br><br>
+        ⭐ Write reviews<br><br>
+        🎯 Daily login<br><br>
+        👥 Refer friends
+        </p>
+
+        `;
+
+    }
+
+}
+
+function trackOrder(id){
+
+    const order=orders.find(x=>x.id===id);
+
+    if(!order) return;
+
+    document.getElementById("profileContent").innerHTML=`
+
+    <h2>🚚 Track Order</h2>
+
+    <p style="margin:8px 0 25px">
+    Order ID: <b>${id}</b>
+    </p>
+
+    <div>
+
+    <div style="
+    padding:20px;
+    border-left:4px solid #6c4cff">
+
+    <b>🟢 Order Confirmed</b>
+    <p style="color:#777;margin-top:5px">
+    Your order has been confirmed.
+    </p>
+
+    </div>
+
+    <div style="
+    padding:20px;
+    border-left:4px solid #6c4cff">
+
+    <b>📦 Packed</b>
+    <p style="color:#777;margin-top:5px">
+    Seller is preparing your package.
+    </p>
+
+    </div>
+
+    <div style="
+    padding:20px;
+    border-left:4px solid #ddd">
+
+    <b>🚚 Shipped</b>
+    <p style="color:#777;margin-top:5px">
+    Waiting for shipment.
+    </p>
+
+    </div>
+
+    <div style="
+    padding:20px;
+    border-left:4px solid #ddd">
+
+    <b>🏠 Out for Delivery</b>
+
+    </div>
+
+    <div style="
+    padding:20px;
+    border-left:4px solid #ddd">
+
+    <b>🎉 Delivered</b>
+
+    </div>
+
+    </div>
+
+    `;
+
+}
+
+/* ================= PROFILE ================= */
+
+function openProfile(){
+
+    document.getElementById("profileModal")
+        .classList.add("show");
+
+    showProfileTab("account");
+
+}
+
+function closeProfile(){
+
+    document.getElementById("profileModal")
+        .classList.remove("show");
+
+}
+
+function closeCheckout(){
+
+    document.getElementById("checkoutModal")
+        .classList.remove("show");
+
+}
+
+/* ================= DEALS ================= */
+
+function openDeals(){
+
+    selectedCategory="All";
+
+    const deals=products
+        .filter(p=>p.discount>=25)
+        .sort((a,b)=>b.discount-a.discount);
+
+    document.getElementById("products").innerHTML=
+        deals.map(productCard).join("");
+
+    scrollToProducts();
+
+    toast("🔥 Showing today's best deals");
+
+}
+
+/* ================= THEME ================= */
+
+function toggleTheme(){
+
+    const dark=document.body.dataset.theme==="dark";
+
+    if(dark){
+
+        document.body.dataset.theme="light";
+
+        document.documentElement.style.setProperty(
+            "--bg","#f6f7fb"
+        );
+
+        document.documentElement.style.setProperty(
+            "--card","#ffffff"
+        );
+
+        document.documentElement.style.setProperty(
+            "--text","#17171c"
+        );
+
+    }else{
+
+        document.body.dataset.theme="dark";
+
+        document.documentElement.style.setProperty(
+            "--bg","#101116"
+        );
+
+        document.documentElement.style.setProperty(
+            "--card","#18191f"
+        );
+
+        document.documentElement.style.setProperty(
+            "--text","#ffffff"
+        );
+
+    }
+
+    localStorage.setItem(
+        "nexora_theme",
+        document.body.dataset.theme
+    );
+
+}
+
+/* ================= BADGES ================= */
+
+function updateBadges(){
+
+    const cartCount=cart.reduce(
+        (sum,item)=>sum+item.qty,
+        0
+    );
+
+    document.getElementById("cartBadge").innerText=
+        cartCount;
+
+    document.getElementById("wishBadge").innerText=
+        wishlist.length;
+
+}
+
+/* ================= TOAST ================= */
+
+function toast(message){
+
+    const el=document.getElementById("toast");
+
+    el.innerText=message;
+
+    el.classList.add("show");
+
+    setTimeout(()=>{
+        el.classList.remove("show");
+    },2500);
+
+}
+
+/* ================= THEME LOAD ================= */
+
+if(localStorage.getItem("nexora_theme")==="dark"){
+
+    document.body.dataset.theme="dark";
+
+    document.documentElement.style.setProperty(
+        "--bg","#101116"
+    );
+
+    document.documentElement.style.setProperty(
+        "--card","#18191f"
+    );
+
+    document.documentElement.style.setProperty(
+        "--text","#ffffff"
+    );
+
+}
+
+</script>
+
+</body>
+</html>

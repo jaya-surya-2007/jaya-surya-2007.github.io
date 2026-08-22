@@ -1,0 +1,1750 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>LearnPath AI</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f5f7ff;
+    color:#172033;
+}
+
+/* LOGIN */
+
+.login-page{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:
+    radial-gradient(circle at top left,#635bff,transparent 35%),
+    radial-gradient(circle at bottom right,#00c6ff,transparent 35%),
+    #101528;
+
+    padding:20px;
+}
+
+.login-card{
+    width:420px;
+    background:white;
+    padding:40px;
+    border-radius:25px;
+    box-shadow:0 25px 70px rgba(0,0,0,.3);
+}
+
+.logo{
+    width:60px;
+    height:60px;
+    border-radius:16px;
+
+    background:linear-gradient(135deg,#635bff,#00bfff);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:28px;
+    color:white;
+
+    margin-bottom:20px;
+}
+
+.login-card h1{
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.login-card p{
+    color:#737b8c;
+    margin-bottom:25px;
+}
+
+.input{
+    margin-bottom:18px;
+}
+
+.input label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+.input input,
+.input select{
+    width:100%;
+    padding:14px;
+
+    border:1px solid #dce1eb;
+    border-radius:10px;
+
+    font-size:15px;
+    outline:none;
+}
+
+.input input:focus,
+.input select:focus{
+    border-color:#635bff;
+}
+
+.btn{
+    width:100%;
+    padding:14px;
+
+    border:none;
+    border-radius:10px;
+
+    background:linear-gradient(135deg,#635bff,#4169e1);
+
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+/* APP */
+
+.app{
+    display:none;
+}
+
+.navbar{
+    height:70px;
+
+    background:white;
+    border-bottom:1px solid #e5e8ef;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:0 6%;
+
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    font-size:21px;
+    font-weight:bold;
+}
+
+.brand-icon{
+    width:40px;
+    height:40px;
+
+    border-radius:10px;
+
+    background:linear-gradient(135deg,#635bff,#00bfff);
+
+    color:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+
+    background:#635bff;
+    color:white;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-weight:bold;
+}
+
+.container{
+    max-width:1150px;
+    margin:auto;
+    padding:40px 20px;
+}
+
+/* HERO */
+
+.hero{
+    background:linear-gradient(135deg,#635bff,#3b82f6);
+
+    color:white;
+
+    padding:40px;
+
+    border-radius:25px;
+
+    margin-bottom:30px;
+}
+
+.hero h1{
+    font-size:35px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    opacity:.9;
+}
+
+/* SETUP */
+
+.card{
+    background:white;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    box-shadow:0 8px 30px rgba(20,30,60,.07);
+
+    margin-bottom:25px;
+}
+
+.card h2{
+    margin-bottom:8px;
+}
+
+.card-description{
+    color:#737b8c;
+    margin-bottom:25px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    gap:20px;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+.levels{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.level{
+    padding:13px 20px;
+
+    border:2px solid #e1e5ed;
+
+    background:white;
+
+    border-radius:10px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.level.selected{
+    border-color:#635bff;
+
+    background:#efedff;
+
+    color:#635bff;
+}
+
+.generate{
+    margin-top:25px;
+
+    padding:14px 25px;
+
+    background:#111827;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+/* ROADMAP */
+
+.roadmap-section{
+    display:none;
+}
+
+.stats{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:18px;
+
+    margin-bottom:25px;
+}
+
+.stat{
+    background:white;
+
+    padding:22px;
+
+    border-radius:18px;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.05);
+}
+
+.stat h3{
+    font-size:28px;
+
+    color:#635bff;
+}
+
+.stat p{
+    color:#737b8c;
+    margin-top:5px;
+}
+
+.progress-container{
+    width:100%;
+    height:10px;
+
+    background:#e7eaf2;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    margin-top:20px;
+}
+
+.progress{
+    height:100%;
+    width:0%;
+
+    background:linear-gradient(90deg,#635bff,#00bfff);
+
+    transition:.4s;
+}
+
+/* ROADMAP TIMELINE */
+
+.roadmap{
+    position:relative;
+}
+
+.roadmap::before{
+    content:"";
+
+    position:absolute;
+
+    left:25px;
+    top:20px;
+    bottom:20px;
+
+    width:3px;
+
+    background:#dce1ee;
+}
+
+.module{
+    position:relative;
+
+    padding-left:65px;
+
+    margin-bottom:25px;
+}
+
+.number{
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:52px;
+    height:52px;
+
+    border-radius:50%;
+
+    background:white;
+
+    border:3px solid #635bff;
+
+    color:#635bff;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    font-weight:bold;
+
+    z-index:2;
+}
+
+.module-card{
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 7px 25px rgba(20,30,60,.06);
+}
+
+.module-header{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+}
+
+.badge{
+    background:#efedff;
+
+    color:#635bff;
+
+    padding:6px 12px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+    font-weight:bold;
+}
+
+/* TOPICS */
+
+.topic{
+    background:#f7f8fc;
+
+    border-radius:12px;
+
+    padding:15px;
+
+    margin-top:10px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+}
+
+.topic-left{
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.topic input{
+    width:18px;
+    height:18px;
+
+    accent-color:#635bff;
+}
+
+.topic.completed .topic-name{
+    text-decoration:line-through;
+
+    color:#9aa2b1;
+}
+
+.watch{
+    padding:8px 13px;
+
+    background:#ff0000;
+
+    color:white;
+
+    border-radius:7px;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    text-decoration:none;
+
+    white-space:nowrap;
+}
+
+.back{
+    padding:10px 16px;
+
+    background:white;
+
+    border:1px solid #ddd;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    margin-bottom:20px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:700px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:auto;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .topic{
+        align-items:flex-start;
+    }
+
+    .watch{
+        font-size:11px;
+        padding:7px;
+    }
+
+    .hero h1{
+        font-size:27px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- ================= LOGIN ================= -->
+
+<section class="login-page" id="loginPage">
+
+<div class="login-card">
+
+<div class="logo">🚀</div>
+
+<h1>Welcome to LearnPath</h1>
+
+<p>
+Your personalized learning journey starts here.
+</p>
+
+<div class="input">
+
+<label>Full Name</label>
+
+<input
+id="name"
+type="text"
+placeholder="Enter your name"
+>
+
+</div>
+
+<div class="input">
+
+<label>Email</label>
+
+<input
+id="email"
+type="email"
+placeholder="student@example.com"
+>
+
+</div>
+
+<div class="input">
+
+<label>Password</label>
+
+<input
+id="password"
+type="password"
+placeholder="••••••••"
+>
+
+</div>
+
+<button class="btn" onclick="login()">
+
+Login & Continue →
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= APP ================= -->
+
+<section class="app" id="app">
+
+
+<nav class="navbar">
+
+<div class="brand">
+
+<div class="brand-icon">
+🚀
+</div>
+
+LearnPath AI
+
+</div>
+
+
+<div class="profile">
+
+<span id="username">
+Student
+</span>
+
+<div class="avatar" id="avatar">
+S
+</div>
+
+</div>
+
+</nav>
+
+
+<main class="container">
+
+
+<!-- HERO -->
+
+<div class="hero">
+
+<h1>
+Build Your Learning Roadmap 🎯
+</h1>
+
+<p>
+Choose your career goal and get a structured syllabus,
+YouTube lessons and projects.
+</p>
+
+</div>
+
+
+<!-- ROADMAP SETUP -->
+
+<div class="card" id="setup">
+
+<h2>
+Create Your Roadmap
+</h2>
+
+<p class="card-description">
+Tell us what you want to learn.
+</p>
+
+
+<div class="grid">
+
+
+<div class="input">
+
+<label>
+Career Goal
+</label>
+
+<select id="career">
+
+<option value="">
+Select your goal
+</option>
+
+<option value="fullstack">
+Full Stack Development
+</option>
+
+<option value="frontend">
+Frontend Development
+</option>
+
+<option value="python">
+Python Development
+</option>
+
+<option value="ai">
+Artificial Intelligence
+</option>
+
+<option value="datascience">
+Data Science
+</option>
+
+<option value="cybersecurity">
+Cybersecurity
+</option>
+
+</select>
+
+</div>
+
+
+<div class="input">
+
+<label>
+Study Time
+</label>
+
+<select id="hours">
+
+<option>
+5 hours/week
+</option>
+
+<option>
+10 hours/week
+</option>
+
+<option>
+15 hours/week
+</option>
+
+<option>
+20+ hours/week
+</option>
+
+</select>
+
+</div>
+
+
+<div class="input full">
+
+<label>
+Current Level
+</label>
+
+<div class="levels">
+
+<button
+class="level selected"
+onclick="setLevel(this,'Beginner')"
+>
+🌱 Beginner
+</button>
+
+<button
+class="level"
+onclick="setLevel(this,'Intermediate')"
+>
+⚡ Intermediate
+</button>
+
+<button
+class="level"
+onclick="setLevel(this,'Advanced')"
+>
+🚀 Advanced
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<button
+class="generate"
+onclick="generateRoadmap()"
+>
+
+✨ Generate My Roadmap
+
+</button>
+
+</div>
+
+
+<!-- ================= ROADMAP ================= -->
+
+<div
+class="roadmap-section"
+id="roadmapSection"
+>
+
+<button
+class="back"
+onclick="backToSetup()"
+>
+← Create Another Roadmap
+</button>
+
+
+<div class="stats">
+
+<div class="stat">
+
+<h3 id="modules">
+0
+</h3>
+
+<p>
+Learning Modules
+</p>
+
+</div>
+
+
+<div class="stat">
+
+<h3 id="topics">
+0
+</h3>
+
+<p>
+Total Lessons
+</p>
+
+</div>
+
+
+<div class="stat">
+
+<h3 id="percentage">
+0%
+</h3>
+
+<p>
+Completed
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2 id="roadmapTitle">
+Your Roadmap
+</h2>
+
+<p
+class="card-description"
+id="roadmapDescription"
+>
+</p>
+
+<div class="progress-container">
+
+<div
+class="progress"
+id="progress"
+>
+</div>
+
+</div>
+
+</div>
+
+
+<div
+class="roadmap"
+id="roadmap"
+>
+</div>
+
+
+</div>
+
+</main>
+
+</section>
+
+
+<script>
+
+
+/* ================= USER ================= */
+
+let selectedLevel = "Beginner";
+
+
+function login(){
+
+const name =
+document.getElementById("name").value.trim();
+
+const email =
+document.getElementById("email").value.trim();
+
+const password =
+document.getElementById("password").value.trim();
+
+
+if(!name || !email || !password){
+
+alert("Please fill all fields.");
+
+return;
+
+}
+
+
+document.getElementById("loginPage").style.display="none";
+
+document.getElementById("app").style.display="block";
+
+document.getElementById("username").textContent=name;
+
+document.getElementById("avatar").textContent=
+name.charAt(0).toUpperCase();
+
+}
+
+
+/* ================= LEVEL ================= */
+
+function setLevel(button,level){
+
+document
+.querySelectorAll(".level")
+.forEach(x=>x.classList.remove("selected"));
+
+button.classList.add("selected");
+
+selectedLevel=level;
+
+}
+
+
+/* =========================================================
+   ROADMAP DATABASE
+
+   video = YouTube VIDEO ID
+
+   You can replace these IDs with your preferred lessons.
+========================================================= */
+
+const roadmaps={
+
+
+/* ================= FULL STACK ================= */
+
+fullstack:{
+
+title:"Full Stack Developer Roadmap",
+
+description:
+"Learn frontend, backend, databases and deployment from beginner to project level.",
+
+modules:[
+
+{
+
+title:"1. HTML & CSS Fundamentals",
+
+time:"2 Weeks",
+
+topics:[
+
+{
+name:"HTML Basics",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Semantic HTML",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"CSS Fundamentals",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Flexbox",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"CSS Grid",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Responsive Web Design",
+video:"LzMnsfqjzkA"
+}
+
+]
+
+},
+
+
+{
+
+title:"2. JavaScript",
+
+time:"3 Weeks",
+
+topics:[
+
+{
+name:"JavaScript Fundamentals",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Variables & Data Types",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Functions",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Arrays & Objects",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"DOM Manipulation",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Events",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Promises & Async JavaScript",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Fetch API",
+video:"LzMnsfqjzkA"
+}
+
+]
+
+},
+
+
+{
+
+title:"3. React",
+
+time:"4 Weeks",
+
+topics:[
+
+{
+name:"React Introduction",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Components",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Props",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"State",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"React Hooks",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"React Router",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"API Integration",
+video:"LzMnsfqjzkA"
+}
+
+]
+
+},
+
+
+{
+
+title:"4. Backend Development",
+
+time:"4 Weeks",
+
+topics:[
+
+{
+name:"Node.js",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Express.js",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"REST APIs",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Middleware",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Authentication",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"JWT",
+video:"LzMnsfqjzkA"
+}
+
+]
+
+},
+
+
+{
+
+title:"5. Database",
+
+time:"2 Weeks",
+
+topics:[
+
+{
+name:"Database Fundamentals",
+video:"nu_pCVPKzTk"
+},
+
+{
+name:"SQL Basics",
+video:"nu_pCVPKzTk"
+},
+
+{
+name:"MongoDB",
+video:"nu_pCVPKzTk"
+},
+
+{
+name:"CRUD Operations",
+video:"nu_pCVPKzTk"
+},
+
+{
+name:"Database Relationships",
+video:"nu_pCVPKzTk"
+}
+
+]
+
+},
+
+
+{
+
+title:"6. Git & Deployment",
+
+time:"2 Weeks",
+
+topics:[
+
+{
+name:"Git Basics",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"GitHub",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Environment Variables",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Deployment",
+video:"LzMnsfqjzkA"
+}
+
+]
+
+},
+
+
+{
+
+title:"7. Capstone Project",
+
+time:"3 Weeks",
+
+topics:[
+
+{
+name:"Project Planning",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Build Frontend",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Build Backend",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Connect Database",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Authentication",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Deploy Project",
+video:"LzMnsfqjzkA"
+}
+
+]
+
+}
+
+]
+
+},
+
+
+/* ================= PYTHON ================= */
+
+python:{
+
+title:"Python Developer Roadmap",
+
+description:
+"Master Python programming and build real-world applications.",
+
+modules:[
+
+{
+
+title:"1. Python Basics",
+
+time:"2 Weeks",
+
+topics:[
+
+{
+name:"Python Introduction",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Variables",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Data Types",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Conditions",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Loops",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Functions",
+video:"LzMnsfqjzkA"
+}
+
+]
+
+},
+
+{
+
+title:"2. Python Intermediate",
+
+time:"2 Weeks",
+
+topics:[
+
+{
+name:"Lists",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Dictionaries",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Tuples",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Sets",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Exception Handling",
+video:"LzMnsfqjzkA"
+}
+
+]
+
+},
+
+{
+
+title:"3. Python Projects",
+
+time:"3 Weeks",
+
+topics:[
+
+{
+name:"Calculator",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"To-Do App",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Weather App",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Final Python Project",
+video:"LzMnsfqjzkA"
+}
+
+]
+
+}
+
+]
+
+},
+
+
+/* ================= AI ================= */
+
+ai:{
+
+title:"Artificial Intelligence Roadmap",
+
+description:
+"Learn Python, machine learning, deep learning and AI projects.",
+
+modules:[
+
+{
+
+title:"1. Python for AI",
+
+time:"2 Weeks",
+
+topics:[
+
+{
+name:"Python Basics",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"NumPy",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Pandas",
+video:"LzMnsfqjzkA"
+}
+
+]
+
+},
+
+{
+
+title:"2. Mathematics",
+
+time:"2 Weeks",
+
+topics:[
+
+{
+name:"Statistics",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Probability",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Linear Algebra",
+video:"LzMnsfqjzkA"
+}
+
+]
+
+},
+
+{
+
+title:"3. Machine Learning",
+
+time:"4 Weeks",
+
+topics:[
+
+{
+name:"Machine Learning Basics",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Regression",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Classification",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Clustering",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Model Evaluation",
+video:"LzMnsfqjzkA"
+}
+
+]
+
+},
+
+{
+
+title:"4. Deep Learning",
+
+time:"4 Weeks",
+
+topics:[
+
+{
+name:"Neural Networks",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Backpropagation",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"CNN",
+video:"LzMnsfqjzkA"
+},
+
+{
+name:"Transformers",
+video:"LzMnsfqjzkA"
+}
+
+]
+
+}
+
+]
+
+}
+
+};
+
+
+/* ================= GENERATE ================= */
+
+function generateRoadmap(){
+
+const career=
+document.getElementById("career").value;
+
+
+if(!career){
+
+alert("Please select your career goal.");
+
+return;
+
+}
+
+
+const data=roadmaps[career];
+
+const roadmap=
+document.getElementById("roadmap");
+
+roadmap.innerHTML="";
+
+
+document.getElementById("setup").style.display="none";
+
+document.getElementById("roadmapSection").style.display="block";
+
+
+document.getElementById("roadmapTitle").textContent=
+data.title;
+
+
+document.getElementById("roadmapDescription").textContent=
+data.description+
+" Current level: "+
+selectedLevel;
+
+
+let totalTopics=0;
+
+
+data.modules.forEach((module,index)=>{
+
+totalTopics+=module.topics.length;
+
+
+const moduleElement=
+document.createElement("div");
+
+moduleElement.className="module";
+
+
+moduleElement.innerHTML=`
+
+<div class="number">
+${index+1}
+</div>
+
+<div class="module-card">
+
+<div class="module-header">
+
+<h3>
+${module.title}
+</h3>
+
+<span class="badge">
+${module.time}
+</span>
+
+</div>
+
+${module.topics.map((topic)=>`
+
+<div class="topic">
+
+<div class="topic-left">
+
+<input
+type="checkbox"
+onchange="updateProgress()"
+>
+
+<span class="topic-name">
+${topic.name}
+</span>
+
+</div>
+
+<a
+class="watch"
+target="_blank"
+href="https://www.youtube.com/watch?v=${topic.video}"
+>
+▶ Watch Lesson
+</a>
+
+</div>
+
+`).join("")}
+
+</div>
+
+`;
+
+
+roadmap.appendChild(moduleElement);
+
+});
+
+
+document.getElementById("modules").textContent=
+data.modules.length;
+
+
+document.getElementById("topics").textContent=
+totalTopics;
+
+
+updateProgress();
+
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+
+/* ================= PROGRESS ================= */
+
+function updateProgress(){
+
+const boxes=
+document.querySelectorAll(".topic input");
+
+const checked=
+document.querySelectorAll(".topic input:checked");
+
+
+const total=boxes.length;
+
+const completed=checked.length;
+
+
+const percent=
+total===0
+?0
+:Math.round((completed/total)*100);
+
+
+document.getElementById("percentage").textContent=
+percent+"%";
+
+
+document.getElementById("progress").style.width=
+percent+"%";
+
+
+boxes.forEach(box=>{
+
+const topic=
+box.closest(".topic");
+
+if(box.checked){
+
+topic.classList.add("completed");
+
+}else{
+
+topic.classList.remove("completed");
+
+}
+
+});
+
+}
+
+
+/* ================= BACK ================= */
+
+function backToSetup(){
+
+document.getElementById("roadmapSection").style.display="none";
+
+document.getElementById("setup").style.display="block";
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+</script>
+
+</body>
+</html>
+```
