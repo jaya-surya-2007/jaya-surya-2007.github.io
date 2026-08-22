@@ -1,795 +1,1318 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>LearnPath AI</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PathPilot — Smart Learning Roadmap</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
-    font-family:Arial, sans-serif;
+}
+
+:root{
+    --bg:#050713;
+    --panel:#0c1122;
+    --panel2:#11182d;
+    --border:rgba(255,255,255,.09);
+    --text:#f7f8ff;
+    --muted:#8c96ad;
+    --purple:#7b5cff;
+    --purple2:#a99aff;
+    --cyan:#22d9ff;
+    --green:#39e6a4;
+    --orange:#ffbd59;
+    --red:#ff6683;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-    background:#f5f7ff;
-    color:#172033;
-}
-
-/* LOGIN */
-
-.login-page{
     min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
+    color:var(--text);
+    font-family:Inter,sans-serif;
     background:
-    radial-gradient(circle at top left,#635bff,transparent 35%),
-    radial-gradient(circle at bottom right,#00c6ff,transparent 35%),
-    #101528;
-
-    padding:20px;
+        radial-gradient(circle at 10% 10%,rgba(123,92,255,.16),transparent 28%),
+        radial-gradient(circle at 90% 90%,rgba(34,217,255,.10),transparent 30%),
+        var(--bg);
+    overflow-x:hidden;
 }
 
-.login-card{
-    width:420px;
-    background:white;
-    padding:40px;
-    border-radius:25px;
-    box-shadow:0 25px 70px rgba(0,0,0,.3);
+button,input,textarea,select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+/* ================= BACKGROUND ================= */
+
+.bg-orb{
+    position:fixed;
+    width:450px;
+    height:450px;
+    border-radius:50%;
+    filter:blur(110px);
+    opacity:.13;
+    pointer-events:none;
+    z-index:-2;
+}
+
+.orb1{
+    background:var(--purple);
+    top:-180px;
+    left:-150px;
+    animation:orb1 10s ease-in-out infinite alternate;
+}
+
+.orb2{
+    background:var(--cyan);
+    right:-180px;
+    bottom:-180px;
+    animation:orb2 12s ease-in-out infinite alternate;
+}
+
+@keyframes orb1{
+    to{
+        transform:translate(140px,120px) scale(1.3);
+    }
+}
+
+@keyframes orb2{
+    to{
+        transform:translate(-130px,-100px) scale(1.25);
+    }
+}
+
+/* ================= COMMON ================= */
+
+.hidden{
+    display:none!important;
+}
+
+.glass{
+    background:rgba(12,17,34,.82);
+    border:1px solid var(--border);
+    backdrop-filter:blur(20px);
 }
 
 .logo{
-    width:60px;
-    height:60px;
-    border-radius:16px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:"Space Grotesk";
+    font-size:24px;
+    font-weight:800;
+}
 
-    background:linear-gradient(135deg,#635bff,#00bfff);
+.logo-icon{
+    width:43px;
+    height:43px;
+    display:grid;
+    place-items:center;
+    border-radius:14px;
+    background:linear-gradient(135deg,var(--purple),var(--cyan));
+    box-shadow:0 0 35px rgba(123,92,255,.45);
+    animation:logoPulse 3s infinite;
+}
 
+@keyframes logoPulse{
+    50%{
+        box-shadow:
+        0 0 45px rgba(123,92,255,.7),
+        0 0 80px rgba(34,217,255,.18);
+        transform:scale(1.04);
+    }
+}
+
+/* ================= LOGIN ================= */
+
+.login{
+    min-height:100vh;
     display:flex;
     align-items:center;
     justify-content:center;
+    padding:25px;
+}
 
-    font-size:28px;
-    color:white;
+.login-card{
+    width:450px;
+    padding:40px;
+    border-radius:28px;
+    box-shadow:0 40px 100px rgba(0,0,0,.5);
+    animation:loginIn .8s cubic-bezier(.2,.8,.2,1);
+}
 
-    margin-bottom:20px;
+@keyframes loginIn{
+    from{
+        opacity:0;
+        transform:translateY(50px) scale(.92);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.login-card .logo{
+    justify-content:center;
+    margin-bottom:30px;
 }
 
 .login-card h1{
+    text-align:center;
+    font-family:"Space Grotesk";
+    font-size:32px;
+    margin-bottom:8px;
+}
+
+.login-card>p{
+    text-align:center;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.6;
+    margin-bottom:28px;
+}
+
+.field{
+    margin-bottom:16px;
+}
+
+.field label{
+    display:block;
+    color:#ccd2e1;
+    font-size:12px;
+    margin-bottom:7px;
+}
+
+.input,
+textarea,
+select{
+    width:100%;
+    border:1px solid var(--border);
+    background:#080c19;
+    color:white;
+    padding:14px;
+    border-radius:12px;
+    outline:none;
+    transition:.25s;
+}
+
+.input:focus,
+textarea:focus,
+select:focus{
+    border-color:var(--purple);
+    box-shadow:0 0 0 3px rgba(123,92,255,.12);
+}
+
+.btn{
+    border:0;
+    border-radius:12px;
+    padding:13px 18px;
+    color:white;
+    font-weight:700;
+    transition:.25s;
+}
+
+.btn-primary{
+    background:linear-gradient(135deg,var(--purple),#5540cf);
+    box-shadow:0 15px 35px rgba(123,92,255,.25);
+}
+
+.btn-primary:hover{
+    transform:translateY(-2px);
+}
+
+.full{
+    width:100%;
+}
+
+.shine{
+    position:relative;
+    overflow:hidden;
+}
+
+.shine:after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:80%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.3),
+        transparent
+    );
+    transform:skewX(-20deg);
+    transition:.7s;
+}
+
+.shine:hover:after{
+    left:130%;
+}
+
+.demo-text{
+    color:#626c83;
+    font-size:10px;
+    text-align:center;
+    margin-top:16px;
+}
+
+/* ================= SETUP ================= */
+
+.setup{
+    min-height:100vh;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    padding:25px;
+}
+
+.setup-card{
+    width:720px;
+    padding:38px;
+    border-radius:28px;
+}
+
+.step{
+    display:none;
+    animation:stepIn .5s ease;
+}
+
+.step.active{
+    display:block;
+}
+
+@keyframes stepIn{
+    from{
+        opacity:0;
+        transform:translateX(25px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.step-label{
+    color:var(--purple2);
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:1.5px;
+    margin-bottom:10px;
+}
+
+.setup-card h2{
+    font-family:"Space Grotesk";
     font-size:30px;
     margin-bottom:8px;
 }
 
-.login-card p{
-    color:#737b8c;
+.setup-card>p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.6;
     margin-bottom:25px;
 }
 
-.input{
-    margin-bottom:18px;
+.option-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-bottom:25px;
 }
 
-.input label{
-    display:block;
-    font-weight:bold;
-    margin-bottom:7px;
-}
-
-.input input,
-.input select{
-    width:100%;
-    padding:14px;
-
-    border:1px solid #dce1eb;
-    border-radius:10px;
-
-    font-size:15px;
-    outline:none;
-}
-
-.input input:focus,
-.input select:focus{
-    border-color:#635bff;
-}
-
-.btn{
-    width:100%;
-    padding:14px;
-
-    border:none;
-    border-radius:10px;
-
-    background:linear-gradient(135deg,#635bff,#4169e1);
-
+.option{
+    text-align:left;
     color:white;
-    font-size:16px;
-    font-weight:bold;
-
-    cursor:pointer;
+    border:1px solid var(--border);
+    background:#0b1020;
+    border-radius:15px;
+    padding:16px;
+    transition:.25s;
 }
 
-/* APP */
+.option:hover{
+    transform:translateY(-4px);
+    border-color:var(--purple);
+}
+
+.option.selected{
+    border-color:var(--purple);
+    background:rgba(123,92,255,.14);
+    box-shadow:0 0 25px rgba(123,92,255,.12);
+    animation:optionPop .3s ease;
+}
+
+@keyframes optionPop{
+    50%{
+        transform:scale(1.04);
+    }
+}
+
+.option strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.option span{
+    color:var(--muted);
+    font-size:11px;
+}
+
+.actions{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+/* ================= AI ================= */
+
+.ai-screen{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:999;
+    background:rgba(3,5,13,.96);
+    backdrop-filter:blur(18px);
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}
+
+.ai-content{
+    width:470px;
+    max-width:90%;
+}
+
+.ai-core{
+    width:95px;
+    height:95px;
+    margin:auto;
+    border-radius:28px;
+    display:grid;
+    place-items:center;
+    font-size:40px;
+    background:linear-gradient(135deg,var(--purple),var(--cyan));
+    box-shadow:
+        0 0 45px rgba(123,92,255,.5),
+        0 0 100px rgba(34,217,255,.15);
+    animation:core 1.5s ease-in-out infinite;
+}
+
+@keyframes core{
+    50%{
+        transform:scale(1.12) rotate(4deg);
+    }
+}
+
+.ai-content h2{
+    font-family:"Space Grotesk";
+    font-size:30px;
+    margin-top:25px;
+}
+
+.ai-status{
+    min-height:20px;
+    color:var(--muted);
+    margin:12px 0 25px;
+}
+
+.ai-track{
+    height:8px;
+    background:#20263b;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.ai-bar{
+    width:0;
+    height:100%;
+    background:linear-gradient(90deg,var(--purple),var(--cyan));
+    transition:.5s;
+}
+
+.ai-percent{
+    margin-top:9px;
+    font-size:12px;
+    color:var(--purple2);
+}
+
+/* ================= APP ================= */
 
 .app{
     display:none;
 }
 
-.navbar{
-    height:70px;
-
-    background:white;
-    border-bottom:1px solid #e5e8ef;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    padding:0 6%;
-
-    position:sticky;
+.sidebar{
+    position:fixed;
+    left:0;
     top:0;
+    bottom:0;
+    width:245px;
+    padding:22px 13px;
+    background:#070a15;
+    border-right:1px solid var(--border);
     z-index:20;
 }
 
-.brand{
-    display:flex;
-    align-items:center;
-    gap:10px;
-
+.sidebar .logo{
+    padding-left:8px;
+    margin-bottom:30px;
     font-size:21px;
-    font-weight:bold;
 }
 
-.brand-icon{
-    width:40px;
-    height:40px;
+.sidebar .logo-icon{
+    width:38px;
+    height:38px;
+    border-radius:11px;
+}
 
-    border-radius:10px;
+.nav-label{
+    color:#596277;
+    font-size:9px;
+    letter-spacing:1.4px;
+    text-transform:uppercase;
+    margin:22px 11px 8px;
+}
 
-    background:linear-gradient(135deg,#635bff,#00bfff);
+.nav{
+    padding:12px;
+    color:#8992a8;
+    border-radius:11px;
+    margin:4px 0;
+    transition:.25s;
+}
 
+.nav:hover,
+.nav.active{
+    background:rgba(123,92,255,.12);
     color:white;
+    transform:translateX(3px);
+}
 
+.main{
+    margin-left:245px;
+}
+
+.topbar{
+    height:72px;
     display:flex;
     align-items:center;
-    justify-content:center;
+    justify-content:space-between;
+    padding:0 30px;
+    border-bottom:1px solid var(--border);
+    background:rgba(5,7,19,.78);
+    backdrop-filter:blur(16px);
+    position:sticky;
+    top:0;
+    z-index:15;
 }
 
-.profile{
+.topbar small{
+    color:var(--muted);
+}
+
+.user{
     display:flex;
     align-items:center;
     gap:10px;
+    font-size:12px;
 }
 
 .avatar{
-    width:40px;
-    height:40px;
-
-    background:#635bff;
-    color:white;
-
+    width:39px;
+    height:39px;
+    display:grid;
+    place-items:center;
     border-radius:50%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-weight:bold;
+    background:linear-gradient(135deg,var(--purple),var(--cyan));
+    font-weight:800;
 }
 
-.container{
-    max-width:1150px;
+.content{
+    max-width:1500px;
     margin:auto;
-    padding:40px 20px;
+    padding:30px;
 }
-
-/* HERO */
 
 .hero{
-    background:linear-gradient(135deg,#635bff,#3b82f6);
-
-    color:white;
-
-    padding:40px;
-
-    border-radius:25px;
-
-    margin-bottom:30px;
+    animation:fadeUp .6s ease;
+    margin-bottom:22px;
 }
 
 .hero h1{
-    font-size:35px;
-    margin-bottom:10px;
+    font-family:"Space Grotesk";
+    font-size:34px;
 }
 
 .hero p{
-    opacity:.9;
-}
-
-/* SETUP */
-
-.card{
-    background:white;
-
-    padding:30px;
-
-    border-radius:20px;
-
-    box-shadow:0 8px 30px rgba(20,30,60,.07);
-
-    margin-bottom:25px;
-}
-
-.card h2{
-    margin-bottom:8px;
-}
-
-.card-description{
-    color:#737b8c;
-    margin-bottom:25px;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-
-    gap:20px;
-}
-
-.full{
-    grid-column:1/-1;
-}
-
-.levels{
-    display:flex;
-    gap:12px;
-    flex-wrap:wrap;
-}
-
-.level{
-    padding:13px 20px;
-
-    border:2px solid #e1e5ed;
-
-    background:white;
-
-    border-radius:10px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-}
-
-.level.selected{
-    border-color:#635bff;
-
-    background:#efedff;
-
-    color:#635bff;
-}
-
-.generate{
-    margin-top:25px;
-
-    padding:14px 25px;
-
-    background:#111827;
-
-    color:white;
-
-    border:none;
-
-    border-radius:10px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-}
-
-/* ROADMAP */
-
-.roadmap-section{
-    display:none;
-}
-
-.stats{
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:18px;
-
-    margin-bottom:25px;
-}
-
-.stat{
-    background:white;
-
-    padding:22px;
-
-    border-radius:18px;
-
-    box-shadow:0 5px 20px rgba(0,0,0,.05);
-}
-
-.stat h3{
-    font-size:28px;
-
-    color:#635bff;
-}
-
-.stat p{
-    color:#737b8c;
+    color:var(--muted);
+    font-size:13px;
     margin-top:5px;
 }
 
-.progress-container{
-    width:100%;
-    height:10px;
+/* ================= STATS ================= */
 
-    background:#e7eaf2;
-
-    border-radius:20px;
-
-    overflow:hidden;
-
-    margin-top:20px;
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-bottom:20px;
 }
 
-.progress{
-    height:100%;
-    width:0%;
-
-    background:linear-gradient(90deg,#635bff,#00bfff);
-
-    transition:.4s;
+.card{
+    border:1px solid var(--border);
+    border-radius:19px;
+    padding:20px;
+    background:linear-gradient(145deg,#10162a,#0c1120);
+    transition:.3s;
 }
 
-/* ROADMAP TIMELINE */
+.card:hover{
+    transform:translateY(-4px);
+    border-color:rgba(123,92,255,.25);
+    box-shadow:0 20px 50px rgba(0,0,0,.18);
+}
+
+.stat{
+    opacity:0;
+    animation:statIn .6s ease forwards;
+}
+
+.stat:nth-child(1){animation-delay:.1s}
+.stat:nth-child(2){animation-delay:.2s}
+.stat:nth-child(3){animation-delay:.3s}
+.stat:nth-child(4){animation-delay:.4s}
+
+@keyframes statIn{
+    from{
+        opacity:0;
+        transform:translateY(25px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.stat-icon{
+    font-size:23px;
+    margin-bottom:9px;
+}
+
+.stat-value{
+    font-family:"Space Grotesk";
+    font-size:27px;
+    font-weight:800;
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:5px;
+}
+
+/* ================= ROADMAP ================= */
+
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.section-head h2{
+    font-family:"Space Grotesk";
+    font-size:19px;
+}
+
+.ai-badge{
+    color:var(--green);
+    background:rgba(57,230,164,.08);
+    padding:6px 9px;
+    border-radius:7px;
+    font-size:10px;
+}
 
 .roadmap{
     position:relative;
 }
 
-.roadmap::before{
+.roadmap:before{
     content:"";
-
     position:absolute;
-
-    left:25px;
+    left:16px;
     top:20px;
     bottom:20px;
-
-    width:3px;
-
-    background:#dce1ee;
+    width:2px;
+    background:linear-gradient(var(--purple),#222a3c);
 }
 
-.module{
+.road-item{
     position:relative;
-
-    padding-left:65px;
-
-    margin-bottom:25px;
+    display:flex;
+    gap:16px;
+    margin:16px 0;
+    opacity:0;
+    animation:roadIn .6s ease forwards;
 }
 
-.number{
-    position:absolute;
+@keyframes roadIn{
+    from{
+        opacity:0;
+        transform:translateX(-30px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
 
-    left:0;
-    top:0;
-
-    width:52px;
-    height:52px;
-
+.road-dot{
+    width:34px;
+    height:34px;
     border-radius:50%;
-
-    background:white;
-
-    border:3px solid #635bff;
-
-    color:#635bff;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    font-weight:bold;
-
+    flex-shrink:0;
     z-index:2;
+    display:grid;
+    place-items:center;
+    background:#151c30;
+    border:2px solid #39425a;
+    font-size:11px;
 }
 
-.module-card{
-    background:white;
-
-    border-radius:18px;
-
-    padding:25px;
-
-    box-shadow:0 7px 25px rgba(20,30,60,.06);
+.road-item.completed .road-dot{
+    background:var(--green);
+    color:#04150d;
+    border-color:var(--green);
 }
 
-.module-header{
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:18px;
+.road-item.current .road-dot{
+    background:var(--purple);
+    border-color:#b9afff;
+    animation:dotPulse 2s infinite;
 }
 
-.badge{
-    background:#efedff;
-
-    color:#635bff;
-
-    padding:6px 12px;
-
-    border-radius:20px;
-
-    font-size:12px;
-
-    font-weight:bold;
+@keyframes dotPulse{
+    50%{
+        box-shadow:0 0 0 11px rgba(123,92,255,0);
+    }
+    0%,100%{
+        box-shadow:0 0 0 0 rgba(123,92,255,.45);
+    }
 }
 
-/* TOPICS */
-
-.topic{
-    background:#f7f8fc;
-
-    border-radius:12px;
-
+.road-body{
+    flex:1;
+    border:1px solid var(--border);
+    border-radius:14px;
     padding:15px;
+    background:#10162a;
+}
 
-    margin-top:10px;
+.road-body h3{
+    font-size:14px;
+    margin-bottom:5px;
+}
 
+.road-body p{
+    color:var(--muted);
+    font-size:11px;
+}
+
+.road-actions{
     display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    gap:10px;
+    gap:8px;
+    margin-top:12px;
+    flex-wrap:wrap;
 }
 
-.topic-left{
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-}
-
-.topic input{
-    width:18px;
-    height:18px;
-
-    accent-color:#635bff;
-}
-
-.topic.completed .topic-name{
-    text-decoration:line-through;
-
-    color:#9aa2b1;
-}
-
-.watch{
-    padding:8px 13px;
-
-    background:#ff0000;
-
+.small-btn{
+    border:1px solid var(--border);
+    background:#171e34;
     color:white;
-
-    border-radius:7px;
-
-    font-size:12px;
-
-    font-weight:bold;
-
-    text-decoration:none;
-
-    white-space:nowrap;
+    border-radius:8px;
+    padding:8px 11px;
+    font-size:10px;
 }
 
-.back{
-    padding:10px 16px;
+.small-btn.primary{
+    background:rgba(123,92,255,.15);
+    color:#c8c1ff;
+}
 
-    background:white;
+/* ================= BOTTOM ================= */
 
-    border:1px solid #ddd;
+.two{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    margin-top:18px;
+}
 
-    border-radius:8px;
+.mission{
+    background:
+        radial-gradient(circle at 90% 10%,rgba(34,217,255,.08),transparent 30%),
+        linear-gradient(135deg,rgba(123,92,255,.12),#10162a);
+    animation:floatCard 4s ease-in-out infinite;
+}
 
-    cursor:pointer;
+@keyframes floatCard{
+    50%{
+        transform:translateY(-4px);
+    }
+}
 
+.tag{
+    display:inline-block;
+    color:#bdb4ff;
+    background:rgba(123,92,255,.13);
+    padding:5px 8px;
+    border-radius:6px;
+    font-size:9px;
+    margin-bottom:13px;
+}
+
+.mission h3{
+    margin-bottom:7px;
+}
+
+.mission p{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.6;
+}
+
+.mission button{
+    margin-top:17px;
+}
+
+.skill{
+    margin:15px 0;
+}
+
+.skill-head{
+    display:flex;
+    justify-content:space-between;
+    font-size:11px;
+    margin-bottom:7px;
+}
+
+.skill-head span:last-child{
+    color:var(--muted);
+}
+
+.progress{
+    height:7px;
+    background:#22283a;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    transform-origin:left;
+    background:linear-gradient(90deg,var(--purple),var(--cyan));
+    animation:progress 1.3s ease;
+}
+
+@keyframes progress{
+    from{transform:scaleX(0)}
+    to{transform:scaleX(1)}
+}
+
+/* ================= LEARNING CENTER ================= */
+
+.learning{
+    display:none;
+    animation:fadeUp .5s ease;
+}
+
+.learning-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
     margin-bottom:20px;
 }
 
-/* RESPONSIVE */
+.learning-header h2{
+    font-family:"Space Grotesk";
+}
 
-@media(max-width:700px){
+.search{
+    width:260px;
+}
 
-    .grid{
-        grid-template-columns:1fr;
+.video-layout{
+    display:grid;
+    grid-template-columns:1.5fr .8fr;
+    gap:18px;
+}
+
+.video-card{
+    overflow:hidden;
+}
+
+.video{
+    width:100%;
+    aspect-ratio:16/9;
+    border:0;
+    display:block;
+    background:#000;
+}
+
+.video-info{
+    padding:20px;
+}
+
+.video-info h2{
+    margin-bottom:8px;
+}
+
+.video-info p{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.6;
+}
+
+.syllabus{
+    max-height:550px;
+    overflow:auto;
+}
+
+.lesson{
+    padding:13px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    margin-bottom:9px;
+    background:#10162a;
+    transition:.25s;
+}
+
+.lesson:hover{
+    transform:translateX(4px);
+}
+
+.lesson.active{
+    border-color:var(--purple);
+    background:rgba(123,92,255,.11);
+}
+
+.lesson h4{
+    font-size:12px;
+    margin-bottom:5px;
+}
+
+.lesson p{
+    color:var(--muted);
+    font-size:10px;
+}
+
+.lesson button{
+    margin-top:8px;
+}
+
+/* ================= NOTES ================= */
+
+.notes{
+    margin-top:18px;
+}
+
+.notes textarea{
+    min-height:130px;
+    resize:vertical;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    padding:14px 18px;
+    border:1px solid var(--border);
+    background:#171e34;
+    border-radius:12px;
+    z-index:2000;
+    transform:translateY(100px);
+    opacity:0;
+    transition:.35s;
+}
+
+.toast.show{
+    transform:none;
+    opacity:1;
+}
+
+/* ================= CONFETTI ================= */
+
+.confetti{
+    position:fixed;
+    top:-20px;
+    z-index:3000;
+    animation:fall 2.4s linear forwards;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(110vh) rotate(720deg);
+        opacity:0;
+    }
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1000px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .full{
-        grid-column:auto;
+    .two,
+    .video-layout{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:720px){
+
+    .sidebar{
+        width:64px;
+    }
+
+    .sidebar .logo span,
+    .nav-label,
+    .nav span{
+        display:none;
+    }
+
+    .main{
+        margin-left:64px;
+    }
+
+    .content{
+        padding:18px;
     }
 
     .stats{
         grid-template-columns:1fr;
     }
 
-    .topic{
-        align-items:flex-start;
+    .option-grid{
+        grid-template-columns:1fr;
     }
 
-    .watch{
-        font-size:11px;
-        padding:7px;
+    .learning-header{
+        flex-direction:column;
+        align-items:stretch;
     }
 
-    .hero h1{
-        font-size:27px;
+    .search{
+        width:100%;
     }
-
 }
-
 </style>
 </head>
 
 <body>
 
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
 
-<!-- ================= LOGIN ================= -->
 
-<section class="login-page" id="loginPage">
+<!-- =================================================
+     LOGIN
+================================================= -->
 
-<div class="login-card">
+<section class="login" id="login">
 
-<div class="logo">🚀</div>
+<div class="login-card glass">
 
-<h1>Welcome to LearnPath</h1>
+<div class="logo">
+    <div class="logo-icon">P</div>
+    PathPilot
+</div>
+
+<h1>Learn smarter.</h1>
 
 <p>
-Your personalized learning journey starts here.
+Your personal AI-powered learning roadmap
+for becoming career ready.
 </p>
 
-<div class="input">
-
-<label>Full Name</label>
-
-<input
-id="name"
-type="text"
-placeholder="Enter your name"
->
-
-</div>
-
-<div class="input">
-
+<div class="field">
 <label>Email</label>
-
-<input
-id="email"
-type="email"
-placeholder="student@example.com"
->
-
+<input class="input" id="email"
+placeholder="student@example.com">
 </div>
 
-<div class="input">
-
+<div class="field">
 <label>Password</label>
-
-<input
-id="password"
+<input class="input" id="password"
 type="password"
-placeholder="••••••••"
->
-
+placeholder="Enter password">
 </div>
 
-<button class="btn" onclick="login()">
+<button class="btn btn-primary full shine"
+onclick="login()">
 
-Login & Continue →
+Enter PathPilot →
 
 </button>
+
+<div class="demo-text">
+Hackathon Demo • Learning Intelligence Platform
+</div>
 
 </div>
 
 </section>
 
 
-<!-- ================= APP ================= -->
+<!-- =================================================
+     SETUP
+================================================= -->
 
-<section class="app" id="app">
+<section class="setup" id="setup">
 
+<div class="setup-card glass">
 
-<nav class="navbar">
+<!-- STEP 1 -->
 
-<div class="brand">
+<div class="step active" id="step1">
 
-<div class="brand-icon">
-🚀
-</div>
+<div class="step-label">STEP 1 / 3</div>
 
-LearnPath AI
-
-</div>
-
-
-<div class="profile">
-
-<span id="username">
-Student
-</span>
-
-<div class="avatar" id="avatar">
-S
-</div>
-
-</div>
-
-</nav>
-
-
-<main class="container">
-
-
-<!-- HERO -->
-
-<div class="hero">
-
-<h1>
-Build Your Learning Roadmap 🎯
-</h1>
+<h2>Let's build your profile 👋</h2>
 
 <p>
-Choose your career goal and get a structured syllabus,
-YouTube lessons and projects.
+Tell us a little about yourself so we can
+create a personalized learning journey.
 </p>
+
+<div class="field">
+
+<label>Your name</label>
+
+<input
+class="input"
+id="name"
+placeholder="Enter your name">
 
 </div>
 
+<div class="field">
 
-<!-- ROADMAP SETUP -->
+<label>Experience</label>
 
-<div class="card" id="setup">
-
-<h2>
-Create Your Roadmap
-</h2>
-
-<p class="card-description">
-Tell us what you want to learn.
-</p>
-
-
-<div class="grid">
-
-
-<div class="input">
-
-<label>
-Career Goal
-</label>
-
-<select id="career">
+<select class="input" id="experience">
 
 <option value="">
-Select your goal
+Choose experience
 </option>
 
-<option value="fullstack">
-Full Stack Development
-</option>
-
-<option value="frontend">
-Frontend Development
-</option>
-
-<option value="python">
-Python Development
-</option>
-
-<option value="ai">
-Artificial Intelligence
-</option>
-
-<option value="datascience">
-Data Science
-</option>
-
-<option value="cybersecurity">
-Cybersecurity
-</option>
+<option>Beginner</option>
+<option>Intermediate</option>
+<option>Advanced</option>
 
 </select>
 
 </div>
 
+<div class="actions">
 
-<div class="input">
-
-<label>
-Study Time
-</label>
-
-<select id="hours">
-
-<option>
-5 hours/week
-</option>
-
-<option>
-10 hours/week
-</option>
-
-<option>
-15 hours/week
-</option>
-
-<option>
-20+ hours/week
-</option>
-
-</select>
-
-</div>
-
-
-<div class="input full">
-
-<label>
-Current Level
-</label>
-
-<div class="levels">
+<span></span>
 
 <button
-class="level selected"
-onclick="setLevel(this,'Beginner')"
->
-🌱 Beginner
-</button>
+class="btn btn-primary"
+onclick="step(2)">
 
-<button
-class="level"
-onclick="setLevel(this,'Intermediate')"
->
-⚡ Intermediate
-</button>
+Continue →
 
-<button
-class="level"
-onclick="setLevel(this,'Advanced')"
->
-🚀 Advanced
 </button>
 
 </div>
 
 </div>
 
+
+<!-- STEP 2 -->
+
+<div class="step" id="step2">
+
+<div class="step-label">STEP 2 / 3</div>
+
+<h2>Choose your career 🚀</h2>
+
+<p>
+Where do you want your learning journey to take you?
+</p>
+
+<div class="option-grid">
+
+<button class="option"
+onclick="career(this,'Full Stack Developer')">
+
+<strong>💻 Full Stack Developer</strong>
+<span>Frontend + backend development</span>
+
+</button>
+
+<button class="option"
+onclick="career(this,'AI Engineer')">
+
+<strong>🤖 AI Engineer</strong>
+<span>Artificial intelligence and ML</span>
+
+</button>
+
+<button class="option"
+onclick="career(this,'Data Scientist')">
+
+<strong>📊 Data Scientist</strong>
+<span>Data and machine learning</span>
+
+</button>
+
+<button class="option"
+onclick="career(this,'Cybersecurity')">
+
+<strong>🔐 Cybersecurity</strong>
+<span>Security and networks</span>
+
+</button>
+
+<button class="option"
+onclick="career(this,'UI/UX Designer')">
+
+<strong>🎨 UI/UX Designer</strong>
+<span>Design and user experience</span>
+
+</button>
+
+<button class="option"
+onclick="career(this,'App Developer')">
+
+<strong>📱 App Developer</strong>
+<span>Mobile applications</span>
+
+</button>
+
+</div>
+
+<div class="actions">
+
+<button
+class="btn"
+onclick="step(1)">
+
+← Back
+
+</button>
+
+<button
+class="btn btn-primary"
+onclick="step(3)">
+
+Continue →
+
+</button>
+
+</div>
+
 </div>
 
 
+<!-- STEP 3 -->
+
+<div class="step" id="step3">
+
+<div class="step-label">STEP 3 / 3</div>
+
+<h2>What do you already know? 🧠</h2>
+
+<p>
+Select your current skills. PathPilot will
+calculate your starting point.
+</p>
+
+<div class="option-grid">
+
+<button class="option skill-option"
+onclick="skill(this,'HTML & CSS')">
+
+<strong>🌐 HTML & CSS</strong>
+<span>Web fundamentals</span>
+
+</button>
+
+<button class="option skill-option"
+onclick="skill(this,'JavaScript')">
+
+<strong>⚡ JavaScript</strong>
+<span>Programming</span>
+
+</button>
+
+<button class="option skill-option"
+onclick="skill(this,'Python')">
+
+<strong>🐍 Python</strong>
+<span>Programming</span>
+
+</button>
+
+<button class="option skill-option"
+onclick="skill(this,'SQL')">
+
+<strong>🗄️ SQL</strong>
+<span>Database</span>
+
+</button>
+
+<button class="option skill-option"
+onclick="skill(this,'Git')">
+
+<strong>🔧 Git</strong>
+<span>Version control</span>
+
+</button>
+
+<button class="option skill-option"
+onclick="skill(this,'React')">
+
+<strong>⚛️ React</strong>
+<span>Frontend</span>
+
+</button>
+
+</div>
+
+<div class="actions">
+
 <button
-class="generate"
-onclick="generateRoadmap()"
->
+class="btn"
+onclick="step(2)">
+
+← Back
+
+</button>
+
+<button
+class="btn btn-primary shine"
+onclick="generate()">
 
 ✨ Generate My Roadmap
 
@@ -797,83 +1320,350 @@ onclick="generateRoadmap()"
 
 </div>
 
+</div>
 
-<!-- ================= ROADMAP ================= -->
+</div>
 
-<div
-class="roadmap-section"
-id="roadmapSection"
->
+</section>
+
+
+<!-- =================================================
+     AI GENERATION
+================================================= -->
+
+<div class="ai-screen" id="ai">
+
+<div class="ai-content">
+
+<div class="ai-core">✨</div>
+
+<h2>PathPilot AI</h2>
+
+<div class="ai-status" id="status">
+Analyzing your profile...
+</div>
+
+<div class="ai-track">
+<div class="ai-bar" id="bar"></div>
+</div>
+
+<div class="ai-percent" id="percent">
+0%
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =================================================
+     APPLICATION
+================================================= -->
+
+<section class="app" id="app">
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<div class="logo-icon">P</div>
+
+<span>PathPilot</span>
+
+</div>
+
+<div class="nav-label">Learning</div>
+
+<div class="nav active"
+onclick="showDashboard()">
+
+🏠 <span>Dashboard</span>
+
+</div>
+
+<div class="nav"
+onclick="showLearning()">
+
+📚 <span>Learning Center</span>
+
+</div>
+
+<div class="nav"
+onclick="scrollToRoadmap()">
+
+🗺️ <span>My Roadmap</span>
+
+</div>
+
+<div class="nav-label">Growth</div>
+
+<div class="nav">
+🧠 <span>Skill Gap</span>
+</div>
+
+<div class="nav">
+🛠️ <span>Projects</span>
+</div>
+
+<div class="nav">
+🏆 <span>Achievements</span>
+</div>
+
+<div class="nav-label">Career</div>
+
+<div class="nav">
+🚀 <span>Career Explorer</span>
+</div>
+
+<div class="nav">
+⚡ <span>Hackathon Mode</span>
+</div>
+
+</aside>
+
+
+<main class="main">
+
+<header class="topbar">
+
+<small id="pageTitle">
+My Learning Dashboard
+</small>
+
+<div class="user">
+
+<div class="avatar" id="avatar">
+ST
+</div>
+
+<span id="userName">
+Student
+</span>
+
+</div>
+
+</header>
+
+
+<div class="content">
+
+<!-- DASHBOARD -->
+
+<div id="dashboard">
+
+<section class="hero">
+
+<h1 id="welcome">
+Welcome 👋
+</h1>
+
+<p id="goal">
+Your personalized learning journey.
+</p>
+
+</section>
+
+
+<section class="stats">
+
+<div class="card stat">
+
+<div class="stat-icon">🔥</div>
+
+<div class="stat-value" id="streak">
+1
+</div>
+
+<div class="stat-label">
+Learning Streak
+</div>
+
+</div>
+
+
+<div class="card stat">
+
+<div class="stat-icon">⭐</div>
+
+<div class="stat-value" id="xp">
+0
+</div>
+
+<div class="stat-label">
+XP
+</div>
+
+</div>
+
+
+<div class="card stat">
+
+<div class="stat-icon">🎯</div>
+
+<div class="stat-value" id="percentage">
+0%
+</div>
+
+<div class="stat-label">
+Roadmap Progress
+</div>
+
+</div>
+
+
+<div class="card stat">
+
+<div class="stat-icon">🏆</div>
+
+<div class="stat-value" id="badges">
+0
+</div>
+
+<div class="stat-label">
+Badges
+</div>
+
+</div>
+
+</section>
+
+
+<section
+class="card"
+id="roadmapSection">
+
+<div class="section-head">
+
+<h2>🗺️ Your Learning Roadmap</h2>
+
+<span class="ai-badge">
+✨ AI Generated
+</span>
+
+</div>
+
+<div class="roadmap" id="roadmap"></div>
+
+</section>
+
+
+<section class="two">
+
+<div class="card mission">
+
+<span class="tag">
+⚡ TODAY'S MISSION
+</span>
+
+<h3 id="missionTitle">
+Start your journey
+</h3>
+
+<p id="missionText">
+Complete your next milestone.
+</p>
 
 <button
-class="back"
-onclick="backToSetup()"
->
-← Create Another Roadmap
+class="btn btn-primary"
+onclick="mission()">
+
+Complete Mission +100 XP
+
 </button>
-
-
-<div class="stats">
-
-<div class="stat">
-
-<h3 id="modules">
-0
-</h3>
-
-<p>
-Learning Modules
-</p>
-
-</div>
-
-
-<div class="stat">
-
-<h3 id="topics">
-0
-</h3>
-
-<p>
-Total Lessons
-</p>
-
-</div>
-
-
-<div class="stat">
-
-<h3 id="percentage">
-0%
-</h3>
-
-<p>
-Completed
-</p>
-
-</div>
 
 </div>
 
 
 <div class="card">
 
-<h2 id="roadmapTitle">
-Your Roadmap
-</h2>
+<div class="section-head">
 
-<p
-class="card-description"
-id="roadmapDescription"
->
+<h2>🧠 Skills</h2>
+
+</div>
+
+<div id="skills"></div>
+
+</div>
+
+</section>
+
+</div>
+
+
+<!-- =================================================
+     LEARNING CENTER
+================================================= -->
+
+<div class="learning" id="learning">
+
+<div class="learning-header">
+
+<div>
+
+<h2>📚 Learning Center</h2>
+
+<p style="color:var(--muted);font-size:12px;margin-top:5px">
+
+Watch lessons, follow the syllabus and
+complete practical tasks.
+
 </p>
 
-<div class="progress-container">
+</div>
 
-<div
-class="progress"
-id="progress"
->
+<input
+class="input search"
+id="search"
+placeholder="🔎 Search lessons..."
+oninput="filterLessons()">
+
+</div>
+
+
+<div class="video-layout">
+
+<div>
+
+<div class="card video-card">
+
+<iframe
+id="player"
+class="video"
+src=""
+title="PathPilot Learning Video"
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen>
+</iframe>
+
+<div class="video-info">
+
+<h2 id="videoTitle">
+Select a lesson
+</h2>
+
+<p id="videoDescription">
+Choose a lesson from the syllabus.
+</p>
+
+<div class="road-actions">
+
+<button
+class="small-btn primary"
+onclick="completeLesson()">
+
+✓ Mark Lesson Complete +50 XP
+
+</button>
+
+<button
+class="small-btn"
+onclick="openYouTube()">
+
+▶ Watch on YouTube
+
+</button>
+
 </div>
 
 </div>
@@ -881,12 +1671,53 @@ id="progress"
 </div>
 
 
-<div
-class="roadmap"
-id="roadmap"
->
+<div class="card notes">
+
+<div class="section-head">
+
+<h2>📝 My Notes</h2>
+
 </div>
 
+<textarea
+id="notes"
+placeholder="Write your notes here..."></textarea>
+
+<button
+class="btn btn-primary"
+style="margin-top:10px"
+onclick="saveNotes()">
+
+Save Notes
+
+</button>
+
+</div>
+
+</div>
+
+
+<div class="card syllabus">
+
+<div class="section-head">
+
+<h2>📖 Syllabus</h2>
+
+<span
+style="font-size:10px;color:var(--muted)"
+id="lessonCount">
+
+</span>
+
+</div>
+
+<div id="lessons"></div>
+
+</div>
+
+</div>
+
+</div>
 
 </div>
 
@@ -895,851 +1726,1273 @@ id="roadmap"
 </section>
 
 
+<div class="toast" id="toast"></div>
+
+
 <script>
 
+/* =================================================
+   USER
+================================================= */
 
-/* ================= USER ================= */
+let user={
+    name:"",
+    experience:"",
+    career:"",
+    skills:[],
+    xp:0,
+    streak:1,
+    badges:0,
+    completed:[],
+    completedLessons:[],
+    notes:""
+};
 
-let selectedLevel = "Beginner";
+let currentLesson=null;
 
+
+/* =================================================
+   LOGIN
+================================================= */
 
 function login(){
 
-const name =
-document.getElementById("name").value.trim();
+    const email=
+        document.getElementById("email").value.trim();
 
-const email =
-document.getElementById("email").value.trim();
+    const password=
+        document.getElementById("password").value.trim();
 
-const password =
-document.getElementById("password").value.trim();
+    if(!email || !password){
 
+        toast("⚠️ Enter your email and password");
 
-if(!name || !email || !password){
+        return;
+    }
 
-alert("Please fill all fields.");
+    document.getElementById("login").style.display="none";
 
-return;
-
+    document.getElementById("setup").style.display="flex";
 }
 
 
-document.getElementById("loginPage").style.display="none";
+/* =================================================
+   STEP
+================================================= */
 
-document.getElementById("app").style.display="block";
+function step(number){
 
-document.getElementById("username").textContent=name;
+    document
+        .querySelectorAll(".step")
+        .forEach(x=>x.classList.remove("active"));
 
-document.getElementById("avatar").textContent=
-name.charAt(0).toUpperCase();
-
+    document
+        .getElementById("step"+number)
+        .classList.add("active");
 }
 
 
-/* ================= LEVEL ================= */
+/* =================================================
+   CAREER
+================================================= */
 
-function setLevel(button,level){
+function career(button,value){
 
-document
-.querySelectorAll(".level")
-.forEach(x=>x.classList.remove("selected"));
+    document
+        .querySelectorAll("#step2 .option")
+        .forEach(x=>x.classList.remove("selected"));
 
-button.classList.add("selected");
+    button.classList.add("selected");
 
-selectedLevel=level;
-
+    user.career=value;
 }
 
 
-/* =========================================================
-   ROADMAP DATABASE
+/* =================================================
+   SKILL
+================================================= */
 
-   video = YouTube VIDEO ID
+function skill(button,value){
 
-   You can replace these IDs with your preferred lessons.
-========================================================= */
+    button.classList.toggle("selected");
 
-const roadmaps={
+    if(button.classList.contains("selected")){
 
+        if(!user.skills.includes(value))
+            user.skills.push(value);
 
-/* ================= FULL STACK ================= */
+    }else{
 
-fullstack:{
-
-title:"Full Stack Developer Roadmap",
-
-description:
-"Learn frontend, backend, databases and deployment from beginner to project level.",
-
-modules:[
-
-{
-
-title:"1. HTML & CSS Fundamentals",
-
-time:"2 Weeks",
-
-topics:[
-
-{
-name:"HTML Basics",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Semantic HTML",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"CSS Fundamentals",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Flexbox",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"CSS Grid",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Responsive Web Design",
-video:"LzMnsfqjzkA"
+        user.skills=
+            user.skills.filter(x=>x!==value);
+    }
 }
+
+
+/* =================================================
+   GENERATE
+================================================= */
+
+function generate(){
+
+    user.name=
+        document.getElementById("name").value.trim();
+
+    user.experience=
+        document.getElementById("experience").value;
+
+    if(!user.name){
+
+        toast("⚠️ Enter your name");
+
+        step(1);
+
+        return;
+    }
+
+    if(!user.experience){
+
+        toast("⚠️ Select your experience");
+
+        step(1);
+
+        return;
+    }
+
+    if(!user.career){
+
+        toast("⚠️ Choose a career");
+
+        step(2);
+
+        return;
+    }
+
+    save();
+
+    document.getElementById("ai").style.display="flex";
+
+    let p=0;
+
+    const messages=[
+        "Analyzing your profile...",
+        "Understanding your career goal...",
+        "Checking your existing skills...",
+        "Calculating skill gaps...",
+        "Finding learning resources...",
+        "Building your syllabus...",
+        "Creating your personalized roadmap...",
+        "Preparing your dashboard..."
+    ];
+
+    let mi=0;
+
+    const timer=setInterval(()=>{
+
+        p+=10;
+
+        document.getElementById("bar").style.width=p+"%";
+
+        document.getElementById("percent").innerText=p+"%";
+
+        if(p%10===0 && mi<messages.length){
+
+            document.getElementById("status").innerText=
+                messages[mi++];
+
+        }
+
+        if(p>=100){
+
+            clearInterval(timer);
+
+            document.getElementById("status").innerText=
+                "🚀 Your roadmap is ready!";
+
+            setTimeout(()=>{
+
+                document.getElementById("ai").style.display="none";
+
+                openApp();
+
+            },900);
+        }
+
+    },180);
+}
+
+
+/* =================================================
+   OPEN APP
+================================================= */
+
+function openApp(){
+
+    document.getElementById("setup").style.display="none";
+
+    document.getElementById("app").style.display="block";
+
+    updateUserUI();
+
+    renderRoadmap();
+
+    renderSkills();
+
+    renderLessons();
+
+    loadNotes();
+}
+
+
+/* =================================================
+   USER UI
+================================================= */
+
+function updateUserUI(){
+
+    document.getElementById("welcome").innerText=
+        "Welcome, "+user.name+" 👋";
+
+    document.getElementById("userName").innerText=
+        user.name;
+
+    document.getElementById("avatar").innerText=
+        user.name.substring(0,2).toUpperCase();
+
+    document.getElementById("goal").innerText=
+        "Your personalized path to becoming a "+
+        user.career+".";
+
+    updateStats();
+}
+
+
+/* =================================================
+   ROADMAP DATA
+================================================= */
+
+const roadmapData={
+
+"Full Stack Developer":[
+
+["HTML & CSS","Frontend","Build modern responsive websites"],
+["JavaScript","Programming","Learn programming and DOM"],
+["Git & GitHub","Tools","Version control"],
+["React","Frontend","Build interactive interfaces"],
+["Node.js","Backend","Create backend applications"],
+["Database","Backend","Learn SQL and data"],
+["Full Stack Project","Portfolio","Build a complete application"],
+["Career Ready","Career","Resume, GitHub and interview"]
+
+],
+
+"AI Engineer":[
+
+["Python Fundamentals","Programming","Python basics"],
+["Mathematics for AI","Foundation","Statistics and linear algebra"],
+["NumPy & Pandas","Data","Work with datasets"],
+["Machine Learning","AI","Train ML models"],
+["Deep Learning","AI","Neural networks"],
+["AI Project","Portfolio","Build an AI application"],
+["Deployment","Engineering","Deploy your model"],
+["AI Career Ready","Career","Portfolio and interviews"]
+
+],
+
+"Data Scientist":[
+
+["Python","Programming","Python for data"],
+["Statistics","Foundation","Probability and statistics"],
+["SQL","Database","Query real datasets"],
+["Pandas & NumPy","Data","Data manipulation"],
+["Data Visualization","Analytics","Charts and dashboards"],
+["Machine Learning","AI","Predictive models"],
+["Data Science Project","Portfolio","Build a complete project"],
+["Career Ready","Career","Portfolio and interview"]
+
+],
+
+"Cybersecurity":[
+
+["Computer Basics","Foundation","Understand computers"],
+["Networking","Security","TCP/IP and networks"],
+["Linux","Systems","Linux fundamentals"],
+["Cybersecurity Basics","Security","Security concepts"],
+["Web Security","Security","Understand common web risks"],
+["Security Testing","Security","Defensive security testing"],
+["Security Project","Portfolio","Build a safe security project"],
+["Cybersecurity Ready","Career","Portfolio preparation"]
+
+],
+
+"UI/UX Designer":[
+
+["Design Fundamentals","Design","Color and typography"],
+["User Research","UX","Understand users"],
+["Wireframing","UX","Create wireframes"],
+["UI Design","Design","Create polished interfaces"],
+["Prototyping","UX","Interactive prototypes"],
+["Usability Testing","UX","Test designs"],
+["Portfolio Case Study","Portfolio","Create case studies"],
+["Designer Ready","Career","Portfolio preparation"]
+
+],
+
+"App Developer":[
+
+["Programming Basics","Programming","Programming fundamentals"],
+["Mobile UI","Mobile","Build app interfaces"],
+["Navigation","Mobile","Screen navigation"],
+["APIs","Backend","Connect apps to services"],
+["Database","Backend","Store app data"],
+["Authentication","Backend","User accounts"],
+["Mobile Project","Portfolio","Build a complete app"],
+["App Developer Ready","Career","Portfolio preparation"]
 
 ]
-
-},
-
-
-{
-
-title:"2. JavaScript",
-
-time:"3 Weeks",
-
-topics:[
-
-{
-name:"JavaScript Fundamentals",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Variables & Data Types",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Functions",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Arrays & Objects",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"DOM Manipulation",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Events",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Promises & Async JavaScript",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Fetch API",
-video:"LzMnsfqjzkA"
-}
-
-]
-
-},
-
-
-{
-
-title:"3. React",
-
-time:"4 Weeks",
-
-topics:[
-
-{
-name:"React Introduction",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Components",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Props",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"State",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"React Hooks",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"React Router",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"API Integration",
-video:"LzMnsfqjzkA"
-}
-
-]
-
-},
-
-
-{
-
-title:"4. Backend Development",
-
-time:"4 Weeks",
-
-topics:[
-
-{
-name:"Node.js",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Express.js",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"REST APIs",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Middleware",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Authentication",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"JWT",
-video:"LzMnsfqjzkA"
-}
-
-]
-
-},
-
-
-{
-
-title:"5. Database",
-
-time:"2 Weeks",
-
-topics:[
-
-{
-name:"Database Fundamentals",
-video:"nu_pCVPKzTk"
-},
-
-{
-name:"SQL Basics",
-video:"nu_pCVPKzTk"
-},
-
-{
-name:"MongoDB",
-video:"nu_pCVPKzTk"
-},
-
-{
-name:"CRUD Operations",
-video:"nu_pCVPKzTk"
-},
-
-{
-name:"Database Relationships",
-video:"nu_pCVPKzTk"
-}
-
-]
-
-},
-
-
-{
-
-title:"6. Git & Deployment",
-
-time:"2 Weeks",
-
-topics:[
-
-{
-name:"Git Basics",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"GitHub",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Environment Variables",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Deployment",
-video:"LzMnsfqjzkA"
-}
-
-]
-
-},
-
-
-{
-
-title:"7. Capstone Project",
-
-time:"3 Weeks",
-
-topics:[
-
-{
-name:"Project Planning",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Build Frontend",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Build Backend",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Connect Database",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Authentication",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Deploy Project",
-video:"LzMnsfqjzkA"
-}
-
-]
-
-}
-
-]
-
-},
-
-
-/* ================= PYTHON ================= */
-
-python:{
-
-title:"Python Developer Roadmap",
-
-description:
-"Master Python programming and build real-world applications.",
-
-modules:[
-
-{
-
-title:"1. Python Basics",
-
-time:"2 Weeks",
-
-topics:[
-
-{
-name:"Python Introduction",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Variables",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Data Types",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Conditions",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Loops",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Functions",
-video:"LzMnsfqjzkA"
-}
-
-]
-
-},
-
-{
-
-title:"2. Python Intermediate",
-
-time:"2 Weeks",
-
-topics:[
-
-{
-name:"Lists",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Dictionaries",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Tuples",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Sets",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Exception Handling",
-video:"LzMnsfqjzkA"
-}
-
-]
-
-},
-
-{
-
-title:"3. Python Projects",
-
-time:"3 Weeks",
-
-topics:[
-
-{
-name:"Calculator",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"To-Do App",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Weather App",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Final Python Project",
-video:"LzMnsfqjzkA"
-}
-
-]
-
-}
-
-]
-
-},
-
-
-/* ================= AI ================= */
-
-ai:{
-
-title:"Artificial Intelligence Roadmap",
-
-description:
-"Learn Python, machine learning, deep learning and AI projects.",
-
-modules:[
-
-{
-
-title:"1. Python for AI",
-
-time:"2 Weeks",
-
-topics:[
-
-{
-name:"Python Basics",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"NumPy",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Pandas",
-video:"LzMnsfqjzkA"
-}
-
-]
-
-},
-
-{
-
-title:"2. Mathematics",
-
-time:"2 Weeks",
-
-topics:[
-
-{
-name:"Statistics",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Probability",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Linear Algebra",
-video:"LzMnsfqjzkA"
-}
-
-]
-
-},
-
-{
-
-title:"3. Machine Learning",
-
-time:"4 Weeks",
-
-topics:[
-
-{
-name:"Machine Learning Basics",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Regression",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Classification",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Clustering",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Model Evaluation",
-video:"LzMnsfqjzkA"
-}
-
-]
-
-},
-
-{
-
-title:"4. Deep Learning",
-
-time:"4 Weeks",
-
-topics:[
-
-{
-name:"Neural Networks",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Backpropagation",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"CNN",
-video:"LzMnsfqjzkA"
-},
-
-{
-name:"Transformers",
-video:"LzMnsfqjzkA"
-}
-
-]
-
-}
-
-]
-
-}
 
 };
 
 
-/* ================= GENERATE ================= */
+/* =================================================
+   YOUTUBE LESSON DATA
+================================================= */
 
-function generateRoadmap(){
+/*
+ Replace these video IDs with your preferred
+ educational videos/playlists.
 
-const career=
-document.getElementById("career").value;
+ Format:
+ "Topic":[
+   ["Lesson title","videoID","description"],
+   ...
+ ]
+*/
+
+const lessons={
+
+"HTML & CSS":[
+
+[
+"HTML Full Course",
+"qz0aGYrrlhU",
+"Learn HTML fundamentals and build your first webpage."
+],
+
+[
+"CSS Full Course",
+"OXGznpKZ_sA",
+"Learn CSS styling, layouts and responsive design."
+],
+
+[
+"Responsive Web Design",
+"1Rs2ND1ryYc",
+"Learn how to create responsive websites."
+]
+
+],
+
+"JavaScript":[
+
+[
+"JavaScript Fundamentals",
+"PkZNo7MFNFg",
+"Learn JavaScript programming fundamentals."
+],
+
+[
+"JavaScript DOM",
+"0ik6X4DJKCc",
+"Understand the DOM and interactive webpages."
+],
+
+[
+"JavaScript Projects",
+"3PHXvlpOkf4",
+"Practice JavaScript by building projects."
+]
+
+],
+
+"Python":[
+
+[
+"Python Beginner Course",
+"kqtD5dpn9C8",
+"Learn Python programming from the beginning."
+],
+
+[
+"Python Projects",
+"8ext9G7xspg",
+"Practice Python with useful beginner projects."
+]
+
+],
+
+"SQL":[
+
+[
+"SQL Full Course",
+"HXV3zeQKqGY",
+"Learn SQL and database fundamentals."
+],
+
+[
+"SQL Practice",
+"qw--VYLpxG4",
+"Practice SQL queries and concepts."
+]
+
+],
+
+"React":[
+
+[
+"React Course",
+"bMknfKXIFA8",
+"Learn React fundamentals and components."
+],
+
+[
+"React Projects",
+"SqcY0GlETPk",
+"Build practical React applications."
+]
+
+],
+
+"Git":[
+
+[
+"Git & GitHub",
+"RGOj5yH7evk",
+"Learn Git and GitHub fundamentals."
+]
+
+],
+
+"Node.js":[
+
+[
+"Node.js Course",
+"RLtyhwFtXQA",
+"Learn backend development using Node.js."
+]
+
+],
+
+"Machine Learning":[
+
+[
+"Machine Learning Course",
+"NWONeJKn6kc",
+"Introduction to machine learning concepts."
+]
+
+],
+
+"Statistics":[
+
+[
+"Statistics Fundamentals",
+"xxpc-HPKN28",
+"Learn statistics concepts for data science."
+]
+
+],
+
+"Networking":[
+
+[
+"Computer Networking",
+"qiQR5rTSshw",
+"Learn networking fundamentals."
+]
+
+],
+
+"Linux":[
+
+[
+"Linux for Beginners",
+"sWbUDq4S6Y8",
+"Learn Linux fundamentals."
+]
+
+],
+
+"Design Fundamentals":[
+
+[
+"UI Design Fundamentals",
+"c9Wg6Cb_YlU",
+"Learn important UI design principles."
+]
+
+],
+
+"User Research":[
+
+[
+"UX Research",
+"Qq1Y8WfVv5M",
+"Learn the basics of user research."
+]
+
+]
+
+};
 
 
-if(!career){
+/* =================================================
+   FIND LESSONS
+================================================= */
 
-alert("Please select your career goal.");
+function getLessonsForTopic(topic){
 
-return;
+    if(lessons[topic])
+        return lessons[topic];
+
+    return [
+
+[
+topic+" — Introduction",
+"",
+"Study the fundamentals of "+topic+
+" and complete the practice task."
+],
+
+[
+topic+" — Deep Dive",
+"",
+"Explore the important concepts of "+topic+"."
+],
+
+[
+topic+" — Practical Project",
+"",
+"Build a small project using "+topic+"."
+]
+
+];
 
 }
 
 
-const data=roadmaps[career];
+/* =================================================
+   ROADMAP
+================================================= */
 
-const roadmap=
-document.getElementById("roadmap");
+function renderRoadmap(){
 
-roadmap.innerHTML="";
+    const box=document.getElementById("roadmap");
 
+    box.innerHTML="";
 
-document.getElementById("setup").style.display="none";
+    const data=
+        roadmapData[user.career] ||
+        roadmapData["Full Stack Developer"];
 
-document.getElementById("roadmapSection").style.display="block";
+    data.forEach((item,index)=>{
 
+        const completed=
+            user.completed.includes(index);
 
-document.getElementById("roadmapTitle").textContent=
-data.title;
+        const current=
+            !completed &&
+            index===user.completed.length;
 
+        const el=document.createElement("div");
 
-document.getElementById("roadmapDescription").textContent=
-data.description+
-" Current level: "+
-selectedLevel;
+        el.className=
+            "road-item "+
+            (completed?"completed ":"")+
+            (current?"current":"");
 
+        el.style.animationDelay=
+            index*.08+"s";
 
-let totalTopics=0;
+        el.innerHTML=`
 
+        <div class="road-dot">
+            ${completed?"✓":index+1}
+        </div>
 
-data.modules.forEach((module,index)=>{
+        <div class="road-body">
 
-totalTopics+=module.topics.length;
+            <h3>${item[0]}</h3>
 
+            <p>
+                ${item[1]} • ${item[2]}
+            </p>
 
-const moduleElement=
-document.createElement("div");
+            <div class="road-actions">
 
-moduleElement.className="module";
+                <button
+                    class="small-btn primary"
+                    onclick="openTopic('${item[0]}')">
 
+                    📺 Watch Lessons
 
-moduleElement.innerHTML=`
+                </button>
 
-<div class="number">
-${index+1}
-</div>
+                ${
+                    current
+                    ?
+                    `<button
+                        class="small-btn"
+                        onclick="completeRoadmap(${index})">
 
-<div class="module-card">
+                        ✓ Complete Milestone
 
-<div class="module-header">
+                    </button>`
+                    :""
+                }
 
-<h3>
-${module.title}
-</h3>
+            </div>
 
-<span class="badge">
-${module.time}
-</span>
+        </div>
+        `;
 
-</div>
+        box.appendChild(el);
 
-${module.topics.map((topic)=>`
-
-<div class="topic">
-
-<div class="topic-left">
-
-<input
-type="checkbox"
-onchange="updateProgress()"
->
-
-<span class="topic-name">
-${topic.name}
-</span>
-
-</div>
-
-<a
-class="watch"
-target="_blank"
-href="https://www.youtube.com/watch?v=${topic.video}"
->
-▶ Watch Lesson
-</a>
-
-</div>
-
-`).join("")}
-
-</div>
-
-`;
+    });
 
 
-roadmap.appendChild(moduleElement);
+    const next=
+        data[user.completed.length];
 
-});
+    if(next){
+
+        document.getElementById("missionTitle").innerText=
+            next[0];
+
+        document.getElementById("missionText").innerText=
+            "Complete "+next[0]+
+            " and continue your "+user.career+
+            " journey.";
+
+    }else{
+
+        document.getElementById("missionTitle").innerText=
+            "🎉 Roadmap Complete!";
+
+        document.getElementById("missionText").innerText=
+            "You have completed your personalized roadmap.";
+
+    }
+
+    updateStats();
+}
 
 
-document.getElementById("modules").textContent=
-data.modules.length;
+/* =================================================
+   OPEN TOPIC
+================================================= */
 
+function openTopic(topic){
 
-document.getElementById("topics").textContent=
-totalTopics;
+    showLearning();
 
+    const list=getLessonsForTopic(topic);
 
-updateProgress();
+    renderTopicLessons(topic,list);
 
+    if(list.length){
 
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
+        selectLesson(
+            topic,
+            list[0][0],
+            list[0][1],
+            list[0][2]
+        );
+    }
 
 }
 
 
-/* ================= PROGRESS ================= */
+/* =================================================
+   RENDER LESSONS
+================================================= */
 
-function updateProgress(){
+function renderLessons(){
 
-const boxes=
-document.querySelectorAll(".topic input");
+    const data=
+        roadmapData[user.career] ||
+        roadmapData["Full Stack Developer"];
 
-const checked=
-document.querySelectorAll(".topic input:checked");
+    let all=[];
 
+    data.forEach(item=>{
 
-const total=boxes.length;
+        getLessonsForTopic(item[0])
+        .forEach(lesson=>{
 
-const completed=checked.length;
+            all.push({
+                topic:item[0],
+                title:lesson[0],
+                id:lesson[1],
+                description:lesson[2]
+            });
 
+        });
 
-const percent=
-total===0
-?0
-:Math.round((completed/total)*100);
+    });
 
+    window.allLessons=all;
 
-document.getElementById("percentage").textContent=
-percent+"%";
-
-
-document.getElementById("progress").style.width=
-percent+"%";
-
-
-boxes.forEach(box=>{
-
-const topic=
-box.closest(".topic");
-
-if(box.checked){
-
-topic.classList.add("completed");
-
-}else{
-
-topic.classList.remove("completed");
-
-}
-
-});
-
+    displayLessons(all);
 }
 
 
-/* ================= BACK ================= */
+/* =================================================
+   DISPLAY LESSONS
+================================================= */
 
-function backToSetup(){
+function displayLessons(list){
 
-document.getElementById("roadmapSection").style.display="none";
+    const container=
+        document.getElementById("lessons");
 
-document.getElementById("setup").style.display="block";
+    container.innerHTML="";
 
-window.scrollTo({
-top:0,
-behavior:"smooth"
+    document.getElementById("lessonCount").innerText=
+        list.length+" lessons";
+
+    list.forEach((lesson,index)=>{
+
+        const done=
+            user.completedLessons.includes(
+                lesson.title
+            );
+
+        const div=document.createElement("div");
+
+        div.className="lesson";
+
+        div.innerHTML=`
+
+        <h4>
+            ${done?"✅":"▶️"}
+            ${lesson.title}
+        </h4>
+
+        <p>
+            ${lesson.topic}
+        </p>
+
+        <button
+            class="small-btn primary"
+            onclick="selectLesson(
+                '${escapeJS(lesson.topic)}',
+                '${escapeJS(lesson.title)}',
+                '${escapeJS(lesson.id)}',
+                '${escapeJS(lesson.description)}'
+            )">
+
+            Open Lesson
+
+        </button>
+
+        `;
+
+        container.appendChild(div);
+
+    });
+
+}
+
+
+/* =================================================
+   TOPIC LESSONS
+================================================= */
+
+function renderTopicLessons(topic,list){
+
+    const converted=
+        list.map(x=>({
+
+            topic:topic,
+            title:x[0],
+            id:x[1],
+            description:x[2]
+
+        }));
+
+    displayLessons(converted);
+}
+
+
+/* =================================================
+   SELECT LESSON
+================================================= */
+
+function selectLesson(topic,title,id,description){
+
+    currentLesson={
+        topic,
+        title,
+        id,
+        description
+    };
+
+    document.getElementById("videoTitle").innerText=
+        title;
+
+    document.getElementById("videoDescription").innerText=
+        description;
+
+    if(id){
+
+        document.getElementById("player").src=
+            "https://www.youtube-nocookie.com/embed/"+
+            id+
+            "?rel=0";
+
+    }else{
+
+        document.getElementById("player").src="";
+
+        toast(
+            "📺 Add a YouTube video ID for this lesson"
+        );
+    }
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =================================================
+   SEARCH
+================================================= */
+
+function filterLessons(){
+
+    const q=
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const filtered=
+        (window.allLessons||[])
+        .filter(x=>
+            x.title.toLowerCase().includes(q) ||
+            x.topic.toLowerCase().includes(q)
+        );
+
+    displayLessons(filtered);
+}
+
+
+/* =================================================
+   COMPLETE LESSON
+================================================= */
+
+function completeLesson(){
+
+    if(!currentLesson){
+
+        toast("⚠️ Select a lesson first");
+
+        return;
+    }
+
+    if(
+        !user.completedLessons.includes(
+            currentLesson.title
+        )
+    ){
+
+        user.completedLessons.push(
+            currentLesson.title
+        );
+
+        user.xp+=50;
+
+        save();
+
+        renderLessons();
+
+        updateStats();
+
+        confetti();
+
+        toast(
+            "🎉 Lesson complete! +50 XP"
+        );
+
+    }else{
+
+        toast(
+            "✅ You already completed this lesson"
+        );
+
+    }
+
+}
+
+
+/* =================================================
+   COMPLETE ROADMAP
+================================================= */
+
+function completeRoadmap(index){
+
+    if(
+        !user.completed.includes(index)
+    ){
+
+        user.completed.push(index);
+
+        user.xp+=250;
+
+        user.badges++;
+
+        save();
+
+        renderRoadmap();
+
+        updateStats();
+
+        confetti();
+
+        toast(
+            "🚀 Milestone complete! +250 XP"
+        );
+
+    }
+
+}
+
+
+/* =================================================
+   MISSION
+================================================= */
+
+function mission(){
+
+    user.xp+=100;
+
+    user.streak++;
+
+    save();
+
+    updateStats();
+
+    confetti();
+
+    toast(
+        "🔥 Mission completed! +100 XP"
+    );
+
+}
+
+
+/* =================================================
+   STATS
+================================================= */
+
+function updateStats(){
+
+    document.getElementById("xp").innerText=
+        user.xp;
+
+    document.getElementById("streak").innerText=
+        user.streak;
+
+    document.getElementById("badges").innerText=
+        user.badges;
+
+    const data=
+        roadmapData[user.career] ||
+        roadmapData["Full Stack Developer"];
+
+    const p=
+        Math.round(
+            user.completed.length/
+            data.length*100
+        );
+
+    document.getElementById("percentage").innerText=
+        p+"%";
+}
+
+
+/* =================================================
+   SKILLS
+================================================= */
+
+function renderSkills(){
+
+    const box=
+        document.getElementById("skills");
+
+    const skills=[
+        "HTML & CSS",
+        "JavaScript",
+        "Python",
+        "SQL",
+        "Git",
+        "React"
+    ];
+
+    box.innerHTML="";
+
+    skills.forEach(s=>{
+
+        const known=
+            user.skills.includes(s);
+
+        const value=
+            known?85:15;
+
+        box.innerHTML+=`
+
+        <div class="skill">
+
+            <div class="skill-head">
+
+                <span>${s}</span>
+
+                <span>${value}%</span>
+
+            </div>
+
+            <div class="progress">
+
+                <span
+                    style="width:${value}%">
+                </span>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+
+/* =================================================
+   LEARNING VIEW
+================================================= */
+
+function showLearning(){
+
+    document.getElementById("dashboard").style.display=
+        "none";
+
+    document.getElementById("learning").style.display=
+        "block";
+
+    document.getElementById("pageTitle").innerText=
+        "Learning Center";
+
+}
+
+
+function showDashboard(){
+
+    document.getElementById("learning").style.display=
+        "none";
+
+    document.getElementById("dashboard").style.display=
+        "block";
+
+    document.getElementById("pageTitle").innerText=
+        "My Learning Dashboard";
+
+}
+
+
+function scrollToRoadmap(){
+
+    showDashboard();
+
+    setTimeout(()=>{
+
+        document.getElementById("roadmapSection")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+    },100);
+
+}
+
+
+/* =================================================
+   YOUTUBE
+================================================= */
+
+function openYouTube(){
+
+    if(!currentLesson || !currentLesson.id){
+
+        toast("⚠️ No YouTube video selected");
+
+        return;
+    }
+
+    window.open(
+        "https://www.youtube.com/watch?v="+
+        currentLesson.id,
+        "_blank"
+    );
+
+}
+
+
+/* =================================================
+   NOTES
+================================================= */
+
+function saveNotes(){
+
+    user.notes=
+        document.getElementById("notes").value;
+
+    save();
+
+    toast("📝 Notes saved!");
+
+}
+
+
+function loadNotes(){
+
+    document.getElementById("notes").value=
+        user.notes||"";
+
+}
+
+
+/* =================================================
+   SAVE
+================================================= */
+
+function save(){
+
+    localStorage.setItem(
+        "pathpilotUser",
+        JSON.stringify(user)
+    );
+
+}
+
+
+/* =================================================
+   LOAD
+================================================= */
+
+window.addEventListener("load",()=>{
+
+    const saved=
+        localStorage.getItem("pathpilotUser");
+
+    if(saved){
+
+        try{
+
+            user=JSON.parse(saved);
+
+            openApp();
+
+        }catch(e){
+
+            localStorage.removeItem(
+                "pathpilotUser"
+            );
+
+        }
+
+    }
+
 });
+
+
+/* =================================================
+   TOAST
+================================================= */
+
+function toast(message){
+
+    const t=
+        document.getElementById("toast");
+
+    t.innerText=message;
+
+    t.classList.add("show");
+
+    setTimeout(()=>{
+
+        t.classList.remove("show");
+
+    },2700);
+
+}
+
+
+/* =================================================
+   CONFETTI
+================================================= */
+
+function confetti(){
+
+    const symbols=["✦","◆","●","★","✧"];
+
+    for(let i=0;i<45;i++){
+
+        const c=
+            document.createElement("div");
+
+        c.className="confetti";
+
+        c.innerText=
+            symbols[
+                Math.floor(
+                    Math.random()*symbols.length
+                )
+            ];
+
+        c.style.left=
+            Math.random()*100+"vw";
+
+        c.style.fontSize=
+            8+Math.random()*14+"px";
+
+        c.style.animationDelay=
+            Math.random()*.5+"s";
+
+        document.body.appendChild(c);
+
+        setTimeout(()=>{
+            c.remove();
+        },3000);
+
+    }
+
+}
+
+
+/* =================================================
+   ESCAPE
+================================================= */
+
+function escapeJS(str){
+
+    return String(str)
+        .replace(/\\/g,"\\\\")
+        .replace(/'/g,"\\'")
+        .replace(/"/g,'&quot;');
 
 }
 
@@ -1747,4 +3000,3 @@ behavior:"smooth"
 
 </body>
 </html>
-```
